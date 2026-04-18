@@ -1,12 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Yummyanime.Domain;
+using Yummyanime.Infrastructure;
 
 namespace Yummyanime.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly DataManager _dataManager;
+
+        public HomeController(DataManager dataManager)
         {
+            _dataManager = dataManager;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            IEnumerable<Domain.Entities.Anime> list = await _dataManager.Anime.GetAnimeAsync();
+
+            ViewBag.TopRated = HelperDTO.TransformAnime(
+                list.OrderByDescending(x => x.Rating)
+                    .ThenBy(x => x.Title)
+                    .Take(6));
+
+            ViewBag.Latest = HelperDTO.TransformAnime(
+                list.OrderByDescending(x => x.Year)
+                    .ThenBy(x => x.Title)
+                    .Take(6));
+
             return View();
         }
 

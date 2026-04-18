@@ -1,16 +1,76 @@
 @inject IConfiguration config
 @{
 AppConfig? appConfig = config.GetSection("Project").Get<AppConfig>();
+IEnumerable<AnimeDTO> topRated = ViewBag.TopRated as IEnumerable<AnimeDTO> ?? Enumerable.Empty<AnimeDTO>();
+IEnumerable<AnimeDTO> latest = ViewBag.Latest as IEnumerable<AnimeDTO> ?? Enumerable.Empty<AnimeDTO>();
 }
-@await Html.PartialAsync("_SidebarPartial")
-<div class="col-8 col-12-medium imp-medium">
+<div class="col-12">
 <div id="content">
-<article>
-<header class="major">
-<h2>Добро пожаловать в @appConfig?.Company.CompanyName</h2>
-<p>Твой тёмный портал в мир аниме: открывай новинки, классику и топовые жанры</p>
-</header>
-<span class="image featured"><img src="~/img/theme-hero-anime.svg" alt="anime catalog hero" /></span>
-</article>
+<section class="portal-hero">
+    <div class="portal-hero-content">
+        <h2>Добро пожаловать в @appConfig?.Company.CompanyName</h2>
+        <p>Твой тёмный портал в мир аниме: находи топовые тайтлы, обновления и самые свежие анонсы.</p>
+        <form method="get" asp-controller="Anime" asp-action="Index" class="portal-search-form">
+            <input type="text" name="search" placeholder="Поиск аниме по названию..." />
+            <button type="submit" class="button">Искать</button>
+        </form>
+    </div>
+</section>
+
+<section class="portal-section">
+    <header class="major">
+        <h2>Топ по рейтингу</h2>
+    </header>
+    <div class="top-rated-strip">
+        @foreach (AnimeDTO entity in topRated)
+        {
+            <a asp-area="" asp-controller="Anime" asp-action="Show" asp-route-id="@entity.Id" class="top-rated-card">
+                <img src="@(string.IsNullOrWhiteSpace(entity.PhotoFileName) ? Url.Content("~/img/bg001.jpg") : Url.Content($"~/img/{entity.PhotoFileName}"))" alt="@entity.Title" />
+                <span class="title">@entity.Title</span>
+                <span class="rating">★ @entity.Rating</span>
+            </a>
+        }
+    </div>
+</section>
+
+<section class="portal-grid">
+    <article class="portal-card">
+        <header class="major"><h3>Обновления</h3></header>
+        @if (latest.Any())
+        {
+            <ul>
+                @foreach (AnimeDTO entity in latest)
+                {
+                    <li>
+                        <a asp-area="" asp-controller="Anime" asp-action="Show" asp-route-id="@entity.Id">@entity.Title</a>
+                        <span>(@entity.Year)</span>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>Скоро здесь появятся свежие обновления.</p>
+        }
+    </article>
+
+    <article class="portal-card">
+        <header class="major"><h3>Новости</h3></header>
+        <ul>
+            <li>Обновили темную тему портала и структуру главной страницы.</li>
+            <li>Каталог пополнился новыми карточками в топе по рейтингу.</li>
+            <li>Поддержка поиска с главной страницы теперь доступна в один клик.</li>
+        </ul>
+    </article>
+
+    <article class="portal-card">
+        <header class="major"><h3>Анонсы</h3></header>
+        <ul>
+            <li>Скоро: подборка «Лучшее сезона» с еженедельным обновлением.</li>
+            <li>В планах: расширенные фильтры по студии и длительности.</li>
+            <li>Следите за обновлениями — новые тайтлы уже на подходе.</li>
+        </ul>
+    </article>
+</section>
 </div>
 </div>

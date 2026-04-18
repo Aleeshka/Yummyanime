@@ -1,10 +1,16 @@
-﻿<!DOCTYPE HTML>
+﻿@{
+	bool isHomeIndex =
+		string.Equals(ViewContext.RouteData.Values["controller"]?.ToString(), "Home", StringComparison.OrdinalIgnoreCase)
+		&& string.Equals(ViewContext.RouteData.Values["action"]?.ToString(), "Index", StringComparison.OrdinalIgnoreCase);
+	string bodyClass = isHomeIndex ? "is-preload theme-dark home-portal-page" : "left-sidebar is-preload theme-dark";
+}
+<!DOCTYPE HTML>
 <html>
 <head>
 	@await Html.PartialAsync("_MetaPartial")
 	@await Html.PartialAsync("_CssPartial")
 </head>
-<body class="left-sidebar is-preload theme-dark">
+<body class="@bodyClass">
 	<div id="page-wrapper">
 		@await Html.PartialAsync("_HeaderPartial")
 		<div id="main-wrapper">
