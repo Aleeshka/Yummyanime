@@ -1,16 +1,72 @@
+@model HomeIndexViewModel
 @inject IConfiguration config
 @{
-AppConfig? appConfig = config.GetSection("Project").Get<AppConfig>();
+    AppConfig? appConfig = config.GetSection("Project").Get<AppConfig>();
 }
-@await Html.PartialAsync("_SidebarPartial")
-<div class="col-8 col-12-medium imp-medium">
-<div id="content">
-<article>
-<header class="major">
-<h2>Добро пожаловать в @appConfig?.Company.CompanyName</h2>
-<p>Твой тёмный портал в мир аниме: открывай новинки, классику и топовые жанры</p>
-</header>
-<span class="image featured"><img src="~/img/theme-hero-anime.svg" alt="anime catalog hero" /></span>
-</article>
-</div>
+
+<div class="col-12">
+    <section class="home-hero">
+        <div class="home-hero__content">
+            <p class="home-hero__label">Yummyanime Portal</p>
+            <h2>Добро пожаловать в @appConfig?.Company.CompanyName</h2>
+            <p>Открывай топовые тайтлы, следи за обновлениями и переходи в полный каталог аниме.</p>
+            <form method="get" asp-controller="Anime" asp-action="Index" class="home-search">
+                <input type="text" name="search" placeholder="Поиск аниме по названию..." />
+                <input type="submit" value="Искать" />
+            </form>
+        </div>
+    </section>
+
+    <section class="home-top-strip">
+        <header class="major">
+            <h2>Топ аниме</h2>
+        </header>
+        <div class="home-top-strip__items">
+            @foreach (AnimeDTO entity in Model.TopAnime)
+            {
+                <article class="home-top-card">
+                    <a asp-controller="Anime" asp-action="Show" asp-route-id="@entity.Id" class="home-top-card__poster">
+                        <img src="@(string.IsNullOrWhiteSpace(entity.PhotoFileName) ? Url.Content("~/img/bg001.jpg") : Url.Content($"~/img/{entity.PhotoFileName}"))" alt="@entity.Title" />
+                    </a>
+                    <div class="home-top-card__body">
+                        <a asp-controller="Anime" asp-action="Show" asp-route-id="@entity.Id" class="home-top-card__title">@entity.Title</a>
+                        <span class="home-top-card__rating">Рейтинг: @entity.Rating</span>
+                    </div>
+                </article>
+            }
+        </div>
+    </section>
+
+    <section class="home-portal-grid">
+        <article class="home-portal-block">
+            <h3>Обновления</h3>
+            <ul>
+                @foreach (AnimeDTO entity in Model.Updates)
+                {
+                    <li>
+                        <a asp-controller="Anime" asp-action="Show" asp-route-id="@entity.Id">@entity.Title</a>
+                        <span>@entity.Year</span>
+                    </li>
+                }
+            </ul>
+        </article>
+
+        <article class="home-portal-block">
+            <h3>Новости</h3>
+            <ul>
+                <li><a href="#">Весенний сезон: что посмотреть в первую очередь</a><span>Сегодня</span></li>
+                <li><a href="#">Обновили подборки по жанрам и рейтингам</a><span>Вчера</span></li>
+                <li><a href="#">Новые карточки тайтлов уже в каталоге</a><span>2 дня назад</span></li>
+            </ul>
+        </article>
+
+        <article class="home-portal-block">
+            <h3>Расписание</h3>
+            <ul>
+                <li><a href="#">Понедельник: новые серии экшен-тайтлов</a><span>19:00</span></li>
+                <li><a href="#">Среда: обновление романтики и драмы</a><span>20:00</span></li>
+                <li><a href="#">Пятница: подборка недели в топе</a><span>21:00</span></li>
+            </ul>
+        </article>
+    </section>
 </div>
