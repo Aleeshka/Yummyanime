@@ -1,19 +1,16 @@
-﻿@inject IConfiguration config
-@{
-	AppConfig? appConfig = config.GetSection("Project").Get<AppConfig>();
-}
-<div id="header-wrapper">
-	<div class="container">
-		<header id="header">
-			<div class="inner">
-				<h1>
-					<a asp-area="" asp-controller="Home" asp-action="Index" id="logo" class="brand-logo">
-						<img src="~/img/yummyanime-logo.svg" alt="@appConfig?.Company.CompanyName" />
-						@appConfig?.Company.CompanyName
-					</a>
-				</h1>
-				@(await Component.InvokeAsync<MenuViewComponent>())
-			</div>
-		</header>
-	</div>
-</div>
+﻿<header id="site-header" class="ya-header">
+    <div class="ya-header-bg"></div>
+
+    <div class="container ya-header-inner">
+        <a asp-controller="Home" asp-action="Index" class="ya-brand">
+            <span class="ya-brand-logo">M</span>
+            <span class="ya-brand-text">YUMMYANIME</span>
+        </a>
+
+        <nav class="ya-nav">
+            <a asp-controller="Home" asp-action="Index">Главная</a>
+            <a asp-controller="Anime" asp-action="Index">Аниме</a>
+            <a asp-controller="Home" asp-action="Contacts">Контакты</a>
+        </nav>
+    </div>
+</header>

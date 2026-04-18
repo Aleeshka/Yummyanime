@@ -619,3 +619,89 @@ body.theme-dark .anime-detail-line {
     grid-template-columns: 1fr;
   }
 }
+<header id="site-header" class="ya-header" >
+<div class="ya-header-bg" > </div >
+
+<div class="container ya-header-inner" >
+<a asp-controller="Home" asp-action="Index" class="ya-brand" >
+<span class="ya-brand-logo" > M</span >
+<span class="ya-brand-text" > YUMMYANIME</span >
+</a >
+
+<nav class="ya-nav" >
+<a asp-controller="Home" asp-action="Index" > Главная</a >
+<a asp-controller="Anime" asp-action="Index" > Аниме</a >
+<a asp-controller="Home" asp-action="Contacts" > Контакты</a >
+</nav >
+</div >
+</header >
+/* header visibility hotfix */
+#site-header.ya-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 2000 !important;
+    min-height: 88px !important;
+    border-bottom: 1px solid rgba(255,72,96,.35) !important;
+    background: rgba(8,10,20,.75) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+#site-header .ya-header-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(900px 120px at 5% -20%, rgba(255,66,90,.22), transparent 70%), linear-gradient(180deg, rgba(18,20,34,.9), rgba(10,12,24,.8));
+    pointer-events: none;
+}
+
+#site-header .ya-header-inner {
+    position: relative;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    min-height: 88px !important;
+}
+
+#site-header .ya-brand {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+#site-header .ya-brand-text {
+    color: #fff !important;
+    font-weight: 800;
+    font-size: 1.7rem !important;
+    letter-spacing: 1px;
+}
+
+#site-header .ya-brand-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    color: #ff556a;
+    background: #14192b;
+    border: 1px solid rgba(255,85,106,.45);
+}
+
+#site-header .ya-nav {
+    display: flex !important;
+    gap: 16px;
+}
+
+    #site-header .ya-nav a {
+        color: #f3f4f8 !important;
+        text-decoration: none;
+        font-weight: 700 !important;
+        font-size: 1rem !important;
+        padding: 10px 14px;
+        border-radius: 10px;
+    }
+
+        #site-header .ya-nav a:hover {
+            border: 1px solid rgba(255,84,108,.45);
+            background: rgba(255,84,108,.08);
+        }
