@@ -333,3 +333,289 @@ body.theme-dark .portal-card li {
     grid-template-columns: repeat(2, minmax(120px, 1fr));
   }
 }
+
+body.theme-dark .glass-panel {
+  background: rgba(14, 16, 26, 0.82);
+  border: 1px solid rgba(255, 43, 67, 0.2);
+  box-shadow: 0 0 0 1px rgba(255, 43, 67, 0.08), 0 18px 32px rgba(3, 3, 8, 0.42);
+}
+
+@supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
+  body.theme-dark .glass-panel {
+    background: rgba(14, 16, 26, 0.62);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+}
+
+body.theme-dark .home-portal-page .wrapper.style2 > .inner {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255, 43, 67, 0.16) 0, rgba(255, 43, 67, 0) 40%),
+    radial-gradient(circle at 100% 100%, rgba(255, 43, 67, 0.08) 0, rgba(255, 43, 67, 0) 55%),
+    rgba(11, 12, 20, 0.94);
+}
+
+body.theme-dark .portal-hero {
+  min-height: 360px;
+  display: flex;
+  align-items: end;
+  background-image:
+    linear-gradient(180deg, rgba(9, 10, 16, 0.3), rgba(9, 10, 16, 0.94)),
+    var(--portal-hero-image),
+    url("../img/abstract-grid-red.svg");
+  background-size: cover, cover, 460px;
+  background-position: center;
+}
+
+body.theme-dark .hero-kicker {
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: #ff9dab;
+  margin-bottom: 0.6rem;
+}
+
+body.theme-dark .hero-actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+body.theme-dark .button.alt {
+  background-color: rgba(255, 43, 67, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(255, 43, 67, 0.45), 0 0 18px rgba(255, 43, 67, 0.18);
+}
+
+body.theme-dark button:disabled,
+body.theme-dark .button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+body.theme-dark .top-rated-strip {
+  display: flex;
+  gap: 0.9rem;
+  overflow-x: auto;
+  padding-bottom: 0.4rem;
+  scrollbar-color: rgba(255, 43, 67, 0.45) rgba(255, 255, 255, 0.08);
+}
+
+body.theme-dark .top-rated-card {
+  flex: 0 0 200px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.theme-dark .top-rated-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 0 1px rgba(255, 43, 67, 0.45), 0 0 24px rgba(255, 43, 67, 0.3);
+}
+
+body.theme-dark .anime-catalog-section {
+  padding: 1.2rem;
+  border-radius: 16px;
+}
+
+body.theme-dark .catalog-header {
+  margin-bottom: 0.8rem;
+}
+
+body.theme-dark .anime-filter-bar {
+  display: grid;
+  grid-template-columns: minmax(220px, 2fr) minmax(210px, 1fr) auto;
+  gap: 0.75rem;
+  border-radius: 12px;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+body.theme-dark .anime-filter-bar input,
+body.theme-dark .anime-filter-bar select,
+body.theme-dark .anime-filter-bar .button {
+  margin: 0;
+}
+
+body.theme-dark .anime-poster-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+body.theme-dark .poster-card {
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.theme-dark .poster-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 0 1px rgba(255, 43, 67, 0.55), 0 0 26px rgba(255, 43, 67, 0.26);
+}
+
+body.theme-dark .poster-link {
+  position: relative;
+  display: block;
+}
+
+body.theme-dark .poster-link img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+body.theme-dark .poster-overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 0.7rem;
+  background: linear-gradient(180deg, rgba(2, 2, 4, 0), rgba(2, 2, 4, 0.92));
+}
+
+body.theme-dark .poster-overlay h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.theme-dark .poster-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.65rem 0.7rem 0.8rem;
+  font-size: 0.76rem;
+  color: #cdd1df;
+}
+
+body.theme-dark .catalog-pagination {
+  margin-top: 1rem;
+  border-radius: 12px;
+  padding: 0.7rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+body.theme-dark .catalog-pagination a,
+body.theme-dark .catalog-pagination .page-current {
+  min-width: 2rem;
+  text-align: center;
+  border-radius: 999px;
+  padding: 0.3rem 0.55rem;
+  text-decoration: none;
+}
+
+body.theme-dark .catalog-pagination .page-current {
+  background: rgba(255, 43, 67, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(255, 43, 67, 0.5);
+  color: #fff;
+}
+
+body.theme-dark .anime-show-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  margin-bottom: 1.05rem;
+  min-height: 280px;
+  display: flex;
+  align-items: end;
+}
+
+body.theme-dark .anime-show-hero:before,
+body.theme-dark .anime-show-hero:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+body.theme-dark .anime-show-hero:before {
+  background-image: var(--hero-bg-image), url("../img/neon-noise-red.svg");
+  background-size: cover, 320px;
+  background-position: center;
+  transform: scale(1.15);
+  filter: blur(16px);
+}
+
+body.theme-dark .anime-show-hero:after {
+  background: linear-gradient(180deg, rgba(6, 6, 10, 0.42), rgba(6, 6, 10, 0.88));
+}
+
+body.theme-dark .anime-show-hero-inner {
+  position: relative;
+  z-index: 1;
+  padding: 1.35rem;
+  max-width: 760px;
+}
+
+body.theme-dark .hero-short {
+  max-width: 62ch;
+}
+
+body.theme-dark .hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+body.theme-dark .anime-show-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+  gap: 1rem;
+}
+
+body.theme-dark .anime-show-poster,
+body.theme-dark .anime-show-details {
+  border-radius: 14px;
+  padding: 0.95rem;
+}
+
+body.theme-dark .anime-show-poster img {
+  width: 100%;
+}
+
+body.theme-dark .anime-show-details h3 {
+  margin-top: 0;
+}
+
+body.theme-dark .anime-detail-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.5rem 0;
+}
+
+@media screen and (min-width: 760px) {
+  body.theme-dark .anime-poster-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 980px) {
+  body.theme-dark .anime-poster-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  body.theme-dark .anime-poster-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  body.theme-dark .anime-poster-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 980px) {
+  body.theme-dark .anime-filter-bar {
+    grid-template-columns: 1fr;
+  }
+
+  body.theme-dark .anime-show-layout {
+    grid-template-columns: 1fr;
+  }
+}

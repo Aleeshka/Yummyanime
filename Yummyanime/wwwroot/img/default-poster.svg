@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 960" role="img" aria-label="Poster placeholder">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#181b2d"/>
+      <stop offset="55%" stop-color="#0f1019"/>
+      <stop offset="100%" stop-color="#08090f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ff2b43" stop-opacity=".0"/>
+      <stop offset="50%" stop-color="#ff2b43" stop-opacity=".72"/>
+      <stop offset="100%" stop-color="#ff2b43" stop-opacity=".0"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="960" fill="url(#g)"/>
+  <g fill="none" stroke="#ff2b43" stroke-opacity=".18">
+    <path d="M-80 230h800"/>
+    <path d="M-80 420h800"/>
+    <path d="M-80 610h800"/>
+    <path d="M140 -100v1220"/>
+    <path d="M320 -100v1220"/>
+    <path d="M500 -100v1220"/>
+  </g>
+  <rect x="72" y="730" width="496" height="8" fill="url(#accent)"/>
+  <circle cx="320" cy="350" r="116" fill="#ff2b43" fill-opacity=".12"/>
+  <path d="M320 286l68 118h-136z" fill="#ff2b43" fill-opacity=".55"/>
+</svg>
