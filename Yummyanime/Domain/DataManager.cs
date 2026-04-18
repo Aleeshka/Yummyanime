@@ -1,16 +1,16 @@
-﻿using Yummyanime.Domain.Repositories.Abstract;
+using Yummyanime.Domain.Repositories.Abstract;
 
 namespace Yummyanime.Domain
 {
     public class DataManager
     {
-        public IServiceCategoriesRepository ServiceCategories { get; set; }
-        public IServicesRepository Services { get; set; }
+        public IGenresRepository Genres { get; set; }
+        public IAnimeRepository Anime { get; set; }
 
-        public DataManager(IServiceCategoriesRepository serviceCategoriesRepository, IServicesRepository servicesRepository)
+        public DataManager(IGenresRepository genresRepository, IAnimeRepository animeRepository)
         {
-            ServiceCategories = serviceCategoriesRepository;
-            Services = servicesRepository;
+            Genres = genresRepository;
+            Anime = animeRepository;
         }
     }
 }

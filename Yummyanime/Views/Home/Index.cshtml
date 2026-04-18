@@ -1,14 +1,16 @@
-﻿@await Html.PartialAsync("_SidebarPartial")
+@inject IConfiguration config
+@{
+AppConfig? appConfig = config.GetSection("Project").Get<AppConfig>();
+}
+@await Html.PartialAsync("_SidebarPartial")
 <div class="col-8 col-12-medium imp-medium">
-	<div id="content">
-		<article>
-			<header class = "major">
-				<h2>Добро пожаловать на сайт строительной компании Монолит! </h2>
-				<p>
-					Строй свое будущее вместе с нами!
-				</p>
-			</header>
-			<span class ="image featured"><img src = "~/img/bg001.jpg" alt = "welcome" /></span>
-		</article>
-	</div>
+<div id="content">
+<article>
+<header class="major">
+<h2>Добро пожаловать в @appConfig?.Company.CompanyName</h2>
+<p>Смотри, выбирай и добавляй любимое аниме в каталог</p>
+</header>
+<span class="image featured"><img src="~/img/bg001.jpg" alt="welcome" /></span>
+</article>
+</div>
 </div>

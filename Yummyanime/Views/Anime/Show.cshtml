@@ -1,0 +1,23 @@
+@model AnimeDTO
+@{
+string? strTitle = Model.Title;
+ViewBag.Title = strTitle;
+}
+@await Html.PartialAsync("_SidebarPartial")
+<div class="col-8 col-12-medium imp-medium">
+<div id="content">
+<h2 class="service-item">@strTitle</h2>
+<div class="service-item">
+Жанр: <span class="text-bold">@Model.GenreName</span>
+</div>
+<div class="service-item">
+Год: <span class="text-bold">@Model.Year</span>
+| Рейтинг: <span class="text-bold">@Model.Rating</span>
+</div>
+<div class="service-item">
+<img src="@(string.IsNullOrWhiteSpace(Model.PhotoFileName) ? Url.Content("~/img/bg001.jpg") : Url.Content($"~/img/{Model.PhotoFileName}"))" class="img-block" alt="@Model.Title" />
+</div>
+<div class="service-item">@Model.DescriptionShort</div>
+<div class="service-item">@Model.Description</div>
+</div>
+</div>
