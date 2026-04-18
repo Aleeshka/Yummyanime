@@ -20,12 +20,12 @@ namespace Yummyanime.Controllers
             ViewBag.TopRated = HelperDTO.TransformAnime(
                 list.OrderByDescending(x => x.Rating)
                     .ThenBy(x => x.Title)
-                    .Take(6));
+                    .Take(12));
 
             ViewBag.Latest = HelperDTO.TransformAnime(
                 list.OrderByDescending(x => x.Year)
                     .ThenBy(x => x.Title)
-                    .Take(6));
+                    .Take(12));
 
             return View();
         }
