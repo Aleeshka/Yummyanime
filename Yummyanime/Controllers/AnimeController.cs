@@ -19,6 +19,13 @@ namespace Yummyanime.Controllers
         public async Task<IActionResult> Index(string? search, string sort = "year_desc", int page = 1)
         {
             IEnumerable<Anime> list = await _dataManager.Anime.GetAnimeAsync();
+            string safeSort = sort switch
+            {
+                "year_asc" => "year_asc",
+                "rating_desc" => "rating_desc",
+                "rating_asc" => "rating_asc",
+                _ => "year_desc"
+            };
 
             if (!string.IsNullOrWhiteSpace(search))
             {
@@ -26,7 +33,7 @@ namespace Yummyanime.Controllers
                     x.Title.Contains(search, StringComparison.OrdinalIgnoreCase));
             }
 
-            list = sort switch
+            list = safeSort switch
             {
                 "year_asc" => list.OrderBy(x => x.Year),
                 "rating_desc" => list.OrderByDescending(x => x.Rating),
@@ -51,7 +58,7 @@ namespace Yummyanime.Controllers
             {
                 Items = HelperDTO.TransformAnime(pagedItems),
                 Search = search,
-                Sort = sort,
+                Sort = safeSort,
                 CurrentPage = page,
                 TotalPages = totalPages
             };

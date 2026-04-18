@@ -2,6 +2,13 @@
 @{
 string strTitle = "Каталог аниме";
 ViewBag.Title = strTitle;
+string safeSort = Model.Sort switch
+{
+"year_asc" => "year_asc",
+"rating_desc" => "rating_desc",
+"rating_asc" => "rating_asc",
+_ => "year_desc"
+};
 }
 @await Html.PartialAsync("_SidebarPartial")
 <div class="col-8 col-12-medium imp-medium">
@@ -14,10 +21,10 @@ ViewBag.Title = strTitle;
 </div>
 <div class="div-box">
 <select name="sort">
-<option value="year_desc" selected="@(Model.Sort == "year_desc" ? "selected" : null)">Год: сначала новые</option>
-<option value="year_asc" selected="@(Model.Sort == "year_asc" ? "selected" : null)">Год: сначала старые</option>
-<option value="rating_desc" selected="@(Model.Sort == "rating_desc" ? "selected" : null)">Рейтинг: по убыванию</option>
-<option value="rating_asc" selected="@(Model.Sort == "rating_asc" ? "selected" : null)">Рейтинг: по возрастанию</option>
+<option value="year_desc" selected="@(safeSort == "year_desc" ? "selected" : null)">Год: сначала новые</option>
+<option value="year_asc" selected="@(safeSort == "year_asc" ? "selected" : null)">Год: сначала старые</option>
+<option value="rating_desc" selected="@(safeSort == "rating_desc" ? "selected" : null)">Рейтинг: по убыванию</option>
+<option value="rating_asc" selected="@(safeSort == "rating_asc" ? "selected" : null)">Рейтинг: по возрастанию</option>
 </select>
 </div>
 <input type="submit" value="Применить" />
@@ -63,7 +70,7 @@ if (i == Model.CurrentPage)
 }
 else
 {
-<a asp-controller="Anime" asp-action="Index" asp-route-page="@i" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort">@i</a>
+<a asp-controller="Anime" asp-action="Index" asp-route-page="@i" asp-route-sort="@safeSort">@i</a>
 }
 
 if (i < Model.TotalPages)
