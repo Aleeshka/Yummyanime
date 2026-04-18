@@ -8,6 +8,8 @@ namespace Yummyanime.Controllers
 {
     public class HomeController : Controller
     {
+        private const int TopAnimeCount = 6;
+        private const int UpdatesCount = 5;
         private readonly DataManager _dataManager;
 
         public HomeController(DataManager dataManager)
@@ -23,11 +25,10 @@ namespace Yummyanime.Controllers
             {
                 TopAnime = HelperDTO.TransformAnime(list
                     .OrderByDescending(x => x.Rating)
-                    .ThenBy(x => x.Title)
-                    .Take(6)),
+                    .Take(TopAnimeCount)),
                 Updates = HelperDTO.TransformAnime(list
                     .OrderByDescending(x => x.Id)
-                    .Take(5))
+                    .Take(UpdatesCount))
             };
 
             return View(model);

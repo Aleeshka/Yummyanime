@@ -24,9 +24,17 @@
         <div class="home-top-strip__items">
             @foreach (AnimeDTO entity in Model.TopAnime)
             {
+                string posterFileName = string.IsNullOrWhiteSpace(entity.PhotoFileName)
+                    ? "bg001.jpg"
+                    : System.IO.Path.GetFileName(entity.PhotoFileName);
+                if (string.IsNullOrWhiteSpace(posterFileName))
+                {
+                    posterFileName = "bg001.jpg";
+                }
+
                 <article class="home-top-card">
                     <a asp-controller="Anime" asp-action="Show" asp-route-id="@entity.Id" class="home-top-card__poster">
-                        <img src="@(string.IsNullOrWhiteSpace(entity.PhotoFileName) ? Url.Content("~/img/bg001.jpg") : Url.Content($"~/img/{entity.PhotoFileName}"))" alt="@entity.Title" />
+                        <img src="@Url.Content($"~/img/{posterFileName}")" alt="@entity.Title" />
                     </a>
                     <div class="home-top-card__body">
                         <a asp-controller="Anime" asp-action="Show" asp-route-id="@entity.Id" class="home-top-card__title">@entity.Title</a>
@@ -54,18 +62,18 @@
         <article class="home-portal-block">
             <h3>Новости</h3>
             <ul>
-                <li><a href="#">Весенний сезон: что посмотреть в первую очередь</a><span>Сегодня</span></li>
-                <li><a href="#">Обновили подборки по жанрам и рейтингам</a><span>Вчера</span></li>
-                <li><a href="#">Новые карточки тайтлов уже в каталоге</a><span>2 дня назад</span></li>
+                <li><strong>Весенний сезон: что посмотреть в первую очередь</strong><span>Сегодня</span></li>
+                <li><strong>Обновили подборки по жанрам и рейтингам</strong><span>Вчера</span></li>
+                <li><strong>Новые карточки тайтлов уже в каталоге</strong><span>2 дня назад</span></li>
             </ul>
         </article>
 
         <article class="home-portal-block">
             <h3>Расписание</h3>
             <ul>
-                <li><a href="#">Понедельник: новые серии экшен-тайтлов</a><span>19:00</span></li>
-                <li><a href="#">Среда: обновление романтики и драмы</a><span>20:00</span></li>
-                <li><a href="#">Пятница: подборка недели в топе</a><span>21:00</span></li>
+                <li><strong>Понедельник: новые серии экшен-тайтлов</strong><span>19:00</span></li>
+                <li><strong>Среда: обновление романтики и драмы</strong><span>20:00</span></li>
+                <li><strong>Пятница: подборка недели в топе</strong><span>21:00</span></li>
             </ul>
         </article>
     </section>
