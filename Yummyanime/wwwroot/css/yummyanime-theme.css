@@ -705,3 +705,79 @@ body.theme-dark .anime-detail-line {
             border: 1px solid rgba(255,84,108,.45);
             background: rgba(255,84,108,.08);
         }
+.top-grid {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 18px;
+}
+
+@media (max-width:1100px) {
+    .top-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+}
+
+@media (max-width:700px) {
+    .top-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.top-card {
+    display: block;
+    border: 1px solid rgba(255,80,110,.22);
+    border-radius: 14px;
+    overflow: hidden;
+    background: linear-gradient(180deg,#101425,#0a0d18);
+    text-decoration: none;
+}
+
+.top-card-poster {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+}
+
+    .top-card-poster img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transform: scale(1.01);
+        transition: transform .25s ease;
+    }
+
+.top-card-rating {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: rgba(10,12,20,.78);
+    border: 1px solid rgba(255,90,120,.45);
+    color: #ffd4dc;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: .85rem;
+}
+
+.top-card-meta {
+    padding: 12px 12px 14px;
+}
+
+    .top-card-meta h4 {
+        margin: 0;
+        color: #fff;
+        font-size: 1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+.top-card:hover {
+    border-color: rgba(255,100,130,.6);
+    box-shadow: 0 10px 26px rgba(255,70,100,.23);
+}
+
+    .top-card:hover .top-card-poster img {
+        transform: scale(1.06);
+    }
