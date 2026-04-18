@@ -1,0 +1,69 @@
+@model Anime
+@{
+string strTitle = "Редактировать аниме";
+ViewBag.Title = strTitle;
+}
+<div>
+<div>
+<form asp-area="" asp-controller="Admin" asp-action="AnimeEdit" method="post" enctype="multipart/form-data">
+<input type="hidden" asp-for="Id" />
+<input type="hidden" asp-for="DateCreated" />
+<input type="hidden" asp-for="Photo" />
+
+<div asp-validation-summary="All"></div>
+
+<div class="div-box">
+<select asp-for="GenreId">
+<option value="">... выберите жанр ...</option>
+@foreach (Genre entity in ViewBag.Genres)
+{
+<option value="@entity.Id">@entity.Title</option>
+}
+</select>
+<span asp-validation-for="GenreId"></span>
+</div>
+
+<div class="div-box">
+<label asp-for="Title"></label>
+<input asp-for="Title" />
+<span asp-validation-for="Title"></span>
+</div>
+
+<div class="div-box">
+<label asp-for="Year"></label>
+<input asp-for="Year" type="number" />
+<span asp-validation-for="Year"></span>
+</div>
+
+<div class="div-box">
+<label asp-for="Rating"></label>
+<input asp-for="Rating" type="number" min="0" max="10" step="0.1" />
+<span asp-validation-for="Rating"></span>
+</div>
+
+<div class="div-box">
+<label asp-for="DescriptionShort"></label>
+<input asp-for="DescriptionShort" />
+<span asp-validation-for="DescriptionShort"></span>
+</div>
+
+<div class="div-box">
+<label asp-for="Description"></label>
+<textarea asp-for="Description"></textarea>
+<span asp-validation-for="Description"></span>
+</div>
+
+<div class="div-box">
+<label asp-for="Photo"></label>
+<input type="file" name="titleImageFile" id="titleImageFile" />
+@if (!string.IsNullOrWhiteSpace(Model.Photo))
+{
+<div>
+<img class="img-block" src="~/img/@Model.Photo" alt="@Model.Title"/>
+</div>
+}
+</div>
+<input type="submit" value="Сохранить"/>
+</form>
+</div>
+</div>

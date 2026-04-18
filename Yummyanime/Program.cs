@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Serilog;
 using Yummyanime.Domain;
 using Yummyanime.Domain.Entities;
 using Yummyanime.Domain.Repositories.Abstract;
 using Yummyanime.Domain.Repositories.EntityFramework;
 using Yummyanime.Infrastructure;
-using Serilog;
 
 namespace Yummyanime
 {
@@ -16,7 +16,6 @@ namespace Yummyanime
         {
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-            //Подключаем в конфигурацию файл appsettings.json
             IConfigurationBuilder configBuild = new ConfigurationBuilder()
                 .SetBasePath(builder.Environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -25,15 +24,13 @@ namespace Yummyanime
             IConfiguration configuration = configBuild.Build();
             AppConfig config = configuration.GetSection("Project").Get<AppConfig>()!;
 
-            // Подключаем контекст БД
             builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(config.Database.ConnectionString)
-                //На момент создания приложения в данной версии EF был баг, хотя ошибки нет, поэтому подавляем предупреждения
                 .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning)));
 
-            builder.Services.AddTransient<IServiceCategoriesRepository, EFServiceCategoriesRepository>();
-            builder.Services.AddTransient<IServicesRepository, EFServicesRepository>();
+            builder.Services.AddTransient<IGenresRepository, EFGenresRepository>();
+            builder.Services.AddTransient<IAnimeRepository, EFAnimeRepository>();
             builder.Services.AddTransient<DataManager>();
-            //Настраиваем Identity систему
+
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
@@ -44,7 +41,6 @@ namespace Yummyanime
                 options.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
-            //Настраиваем Auth cookie
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.Name = "YummyanimeAuth";
@@ -54,37 +50,31 @@ namespace Yummyanime
                 options.SlidingExpiration = true;
             });
 
-            //Подключаем функционал контроллеров
             builder.Services.AddControllersWithViews();
 
             builder.Host.UseSerilog((context, configuration) =>
                 configuration.ReadFrom.Configuration(context.Configuration));
 
-            //Собираем конфигурацию
             WebApplication app = builder.Build();
 
             app.UseSerilogRequestLogging();
 
-            //Далее подключаем обработку исключение
             if (app.Environment.IsDevelopment())
-                    app.UseDeveloperExceptionPage();
-               
+            {
+                app.UseDeveloperExceptionPage();
+                await DevDataSeeder.SeedAsync(app.Services);
+            }
 
-            //! Порядок следования middleware очень важен, так как они выполняются согласно нему
-            //Подключаем использование статичных файлов(jss,css любых)
             app.UseStaticFiles();
-            //Подключаем маршрутизацию
             app.UseRouting();
 
-            //Подключаем аутентификацию и авторизацию
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseAuthorization();
-            //Регистрируем нужные нам маршруты
+
             app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 
-
-             await app.RunAsync();
+            await app.RunAsync();
         }
     }
 }

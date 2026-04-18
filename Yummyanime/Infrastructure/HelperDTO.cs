@@ -1,30 +1,33 @@
-﻿using Yummyanime.Domain.Entities;
+using Yummyanime.Domain.Entities;
 using Yummyanime.Models;
 
 namespace Yummyanime.Infrastructure
 {
     public static class HelperDTO
     {
-        public static ServiceDTO TransformService(Service entity)
+        public static AnimeDTO TransformAnime(Anime entity)
         {
-            ServiceDTO entityDTO = new ServiceDTO();
-            entityDTO.Id = entity.Id;
-            entityDTO.CategoryName = entity.ServiceCategory?.Title;
-            entityDTO.Title = entity.Title;
-            entityDTO.DescriptionShort = entity.DescriptionShort;
-            entityDTO.Description = entity.Description;
-            entityDTO.PhotoFileName = entity.Photo;
-            entityDTO.Type = entity.Type.ToString();
-
-            return entityDTO;
+            return new AnimeDTO
+            {
+                Id = entity.Id,
+                GenreName = entity.Genre?.Title,
+                Title = entity.Title,
+                DescriptionShort = entity.DescriptionShort,
+                Description = entity.Description,
+                PhotoFileName = entity.Photo,
+                Year = entity.Year,
+                Rating = entity.Rating
+            };
         }
-        public static IEnumerable<ServiceDTO> TransformServices(IEnumerable<Service> entities)
-        {
-            List<ServiceDTO> entitiesDTO = new List<ServiceDTO>();
 
-            // В цикле каждую доменную модель из коллекции превращаем в DTO
-            foreach (Service entity in entities)
-                entitiesDTO.Add(TransformService(entity));
+        public static IEnumerable<AnimeDTO> TransformAnime(IEnumerable<Anime> entities)
+        {
+            List<AnimeDTO> entitiesDTO = new List<AnimeDTO>();
+
+            foreach (Anime entity in entities)
+            {
+                entitiesDTO.Add(TransformAnime(entity));
+            }
 
             return entitiesDTO;
         }
