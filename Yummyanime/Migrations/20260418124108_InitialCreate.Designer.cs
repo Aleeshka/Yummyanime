@@ -12,7 +12,7 @@ using Yummyanime.Domain.Entities;
 namespace Yummyanime.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260409144326_InitialCreate")]
+    [Migration("20260418124108_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -55,7 +55,7 @@ namespace Yummyanime.Migrations
                         new
                         {
                             Id = "B8A06B29-B30F-4126-ADB2-2E715980FB48",
-                            ConcurrencyStamp = "fdb5bc59-bd7f-4337-b926-251c17cda310",
+                            ConcurrencyStamp = "6a37a6db-7c9e-48b7-a0cf-db797f845ac1",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -155,13 +155,13 @@ namespace Yummyanime.Migrations
                         {
                             Id = "F44ABC2E-C878-4B95-9445-6B6E9CD8079E",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "40ed6cde-c90b-4f23-a107-6406f982f1ff",
+                            ConcurrencyStamp = "397af1e9-cb9d-4515-a443-34392f3f2ec6",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@admin.com",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGUiZpQwMnM5nDsNDGxHaQWLk5JYfzPoBn3mGnprPilBvsbJAu8CpipVWx7qPRIM/A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIRA9QZjx+xS/DECvXxbXjhWfW80I2V4LZDCo3nMbgGTUxdtw8QNfzeeHy2uhU3GJg==",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
