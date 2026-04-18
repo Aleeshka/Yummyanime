@@ -7,7 +7,8 @@
 		<header id="header">
 			<div class="inner">
 				<h1>
-					<a asp-area="" asp-controller="Home" asp-action="Index" id="logo">
+					<a asp-area="" asp-controller="Home" asp-action="Index" id="logo" class="brand-logo">
+						<img src="~/img/yummyanime-logo.svg" alt="@appConfig?.Company.CompanyName" />
 						@appConfig?.Company.CompanyName
 					</a>
 				</h1>
