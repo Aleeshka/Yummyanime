@@ -1,0 +1,85 @@
+@model AnimeCatalogViewModel
+@{
+string strTitle = "Каталог аниме";
+ViewBag.Title = strTitle;
+string safeSort = Model.Sort switch
+{
+"year_asc" => "year_asc",
+"rating_desc" => "rating_desc",
+"rating_asc" => "rating_asc",
+_ => "year_desc"
+};
+}
+@await Html.PartialAsync("_SidebarPartial")
+<div class="col-8 col-12-medium imp-medium">
+<div id="content">
+<section class="box article-list">
+<h2 class="icon fa-file-alt">@strTitle</h2>
+<form method="get" asp-controller="Anime" asp-action="Index" class="service-item">
+<div class="div-box">
+<input type="text" name="search" value="@Model.Search" placeholder="Поиск по названию" />
+</div>
+<div class="div-box">
+<select name="sort">
+<option value="year_desc" selected="@(safeSort == "year_desc" ? "selected" : null)">Год: сначала новые</option>
+<option value="year_asc" selected="@(safeSort == "year_asc" ? "selected" : null)">Год: сначала старые</option>
+<option value="rating_desc" selected="@(safeSort == "rating_desc" ? "selected" : null)">Рейтинг: по убыванию</option>
+<option value="rating_asc" selected="@(safeSort == "rating_asc" ? "selected" : null)">Рейтинг: по возрастанию</option>
+</select>
+</div>
+<input type="submit" value="Применить" />
+</form>
+
+@if (Model.Items.Any())
+{
+@foreach (AnimeDTO entity in Model.Items)
+{
+<article class="box excerpt">
+<a asp-area="" asp-controller="Anime" asp-action="Show" asp-route-id="@entity.Id" class="image left image-service-list">
+<img src="@(string.IsNullOrWhiteSpace(entity.PhotoFileName) ? Url.Content("~/img/bg001.jpg") : Url.Content($"~/img/{entity.PhotoFileName}"))" alt="@entity.Title" />
+</a>
+<div>
+<header>
+<h3>
+<a asp-area="" asp-controller="Anime" asp-action="Show" asp-route-id="@entity.Id">@entity.Title</a>
+</h3>
+</header>
+<div>
+Жанр: <span class="text-bold">@entity.GenreName</span>
+| Год: <span class="text-bold">@entity.Year</span>
+| Рейтинг: <span class="text-bold">@entity.Rating</span>
+</div>
+<p>@entity.DescriptionShort</p>
+</div>
+</article>
+}
+}
+else
+{
+<p>Ничего не найдено.</p>
+}
+
+@if (Model.TotalPages > 1)
+{
+<div class="service-item">
+@for (int i = 1; i <= Model.TotalPages; i++)
+{
+if (i == Model.CurrentPage)
+{
+<span class="text-bold">@i</span>
+}
+else
+{
+<a asp-controller="Anime" asp-action="Index" asp-route-page="@i" asp-route-sort="@safeSort">@i</a>
+}
+
+if (i < Model.TotalPages)
+{
+<span> | </span>
+}
+}
+</div>
+}
+</section>
+</div>
+</div>

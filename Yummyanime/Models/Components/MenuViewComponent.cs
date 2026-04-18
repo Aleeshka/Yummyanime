@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Yummyanime.Domain;
 using Yummyanime.Domain.Entities;
 using Yummyanime.Infrastructure;
@@ -16,9 +16,8 @@ namespace Yummyanime.Models.Components
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            IEnumerable<Service> list = await _dataManager.Services.GetServicesAsync();
-
-            IEnumerable<ServiceDTO> listDTO = HelperDTO.TransformServices(list);
+            IEnumerable<Anime> list = await _dataManager.Anime.GetAnimeAsync();
+            IEnumerable<AnimeDTO> listDTO = HelperDTO.TransformAnime(list);
 
             return await Task.FromResult((IViewComponentResult)View("Default", listDTO));
         }

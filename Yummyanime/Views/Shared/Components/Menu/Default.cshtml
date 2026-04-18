@@ -1,25 +1,25 @@
-﻿@model IEnumerable<ServiceDTO>
+@model IEnumerable<AnimeDTO>
 
 <nav id="nav">
-	<ul>
-		<li>
-			<a asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
-		</li>
-		<li>
-			<a asp-area="" asp-controller="Services" asp-action="Index">Услуги</a>
-			<ul>
-				@foreach (ServiceDTO entity in Model)
-				{
-					<li>
-						<a asp-area="" asp-controller="Services" asp-action="Show" asp-route-id="@entity.Id">
-							@entity.Title
-						</a>
-					</li>
-				}
-			</ul>
-		</li>
-		<li>
-			<a asp-area="" asp-controller="Home" asp-action="Contacts">Контакты</a>
-		</li>
-	</ul>
+<ul>
+<li>
+<a asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
+</li>
+<li>
+<a asp-area="" asp-controller="Anime" asp-action="Index">Аниме</a>
+<ul>
+@foreach (AnimeDTO entity in Model)
+{
+<li>
+<a asp-area="" asp-controller="Anime" asp-action="Show" asp-route-id="@entity.Id">
+@entity.Title
+</a>
+</li>
+}
+</ul>
+</li>
+<li>
+<a asp-area="" asp-controller="Home" asp-action="Contacts">Контакты</a>
+</li>
+</ul>
 </nav>

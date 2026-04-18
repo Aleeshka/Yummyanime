@@ -47,15 +47,6 @@ namespace Yummyanime.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "B8A06B29-B30F-4126-ADB2-2E715980FB48",
-                            ConcurrencyStamp = "fdb5bc59-bd7f-4337-b926-251c17cda310",
-                            Name = "admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -146,24 +137,6 @@ namespace Yummyanime.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "F44ABC2E-C878-4B95-9445-6B6E9CD8079E",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "40ed6cde-c90b-4f23-a107-6406f982f1ff",
-                            Email = "admin@admin.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "admin@admin.com",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGUiZpQwMnM5nDsNDGxHaQWLk5JYfzPoBn3mGnprPilBvsbJAu8CpipVWx7qPRIM/A==",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -226,13 +199,6 @@ namespace Yummyanime.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "F44ABC2E-C878-4B95-9445-6B6E9CD8079E",
-                            RoleId = "B8A06B29-B30F-4126-ADB2-2E715980FB48"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -254,7 +220,7 @@ namespace Yummyanime.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Yummyanime.Domain.Entities.Service", b =>
+            modelBuilder.Entity("Yummyanime.Domain.Entities.Anime", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -273,29 +239,33 @@ namespace Yummyanime.Migrations
                         .HasMaxLength(3000)
                         .HasColumnType("nvarchar(3000)");
 
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Photo")
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int?>("ServiceCategoryId")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Rating")
+                        .HasPrecision(3, 1)
+                        .HasColumnType("decimal(3,1)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("Type")
+                    b.Property<int>("Year")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ServiceCategoryId");
+                    b.HasIndex("GenreId");
 
-                    b.ToTable("Services");
+                    b.ToTable("Animes");
                 });
 
-            modelBuilder.Entity("Yummyanime.Domain.Entities.ServiceCategory", b =>
+            modelBuilder.Entity("Yummyanime.Domain.Entities.Genre", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -313,7 +283,7 @@ namespace Yummyanime.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ServiceCategories");
+                    b.ToTable("Genres");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -367,18 +337,20 @@ namespace Yummyanime.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Yummyanime.Domain.Entities.Service", b =>
+            modelBuilder.Entity("Yummyanime.Domain.Entities.Anime", b =>
                 {
-                    b.HasOne("Yummyanime.Domain.Entities.ServiceCategory", "ServiceCategory")
-                        .WithMany("Services")
-                        .HasForeignKey("ServiceCategoryId");
+                    b.HasOne("Yummyanime.Domain.Entities.Genre", "Genre")
+                        .WithMany("Animes")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("ServiceCategory");
+                    b.Navigation("Genre");
                 });
 
-            modelBuilder.Entity("Yummyanime.Domain.Entities.ServiceCategory", b =>
+            modelBuilder.Entity("Yummyanime.Domain.Entities.Genre", b =>
                 {
-                    b.Navigation("Services");
+                    b.Navigation("Animes");
                 });
 #pragma warning restore 612, 618
         }

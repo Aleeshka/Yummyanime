@@ -51,7 +51,7 @@ namespace Yummyanime.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ServiceCategories",
+                name: "Genres",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -61,7 +61,7 @@ namespace Yummyanime.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ServiceCategories", x => x.Id);
+                    table.PrimaryKey("PK_Genres", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -171,43 +171,35 @@ namespace Yummyanime.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Services",
+                name: "Animes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ServiceCategoryId = table.Column<int>(type: "int", nullable: true),
+                    GenreId = table.Column<int>(type: "int", nullable: false),
                     DescriptionShort = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", maxLength: 100000, nullable: true),
                     Photo = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
-                    Type = table.Column<int>(type: "int", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: false),
+                    Rating = table.Column<decimal>(type: "decimal(3,1)", precision: 3, scale: 1, nullable: false),
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Services", x => x.Id);
+                    table.PrimaryKey("PK_Animes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Services_ServiceCategories_ServiceCategoryId",
-                        column: x => x.ServiceCategoryId,
-                        principalTable: "ServiceCategories",
-                        principalColumn: "Id");
+                        name: "FK_Animes_Genres_GenreId",
+                        column: x => x.GenreId,
+                        principalTable: "Genres",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "B8A06B29-B30F-4126-ADB2-2E715980FB48", "fdb5bc59-bd7f-4337-b926-251c17cda310", "admin", "ADMIN" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "F44ABC2E-C878-4B95-9445-6B6E9CD8079E", 0, "40ed6cde-c90b-4f23-a107-6406f982f1ff", "admin@admin.com", true, false, null, "admin@admin.com", "ADMIN", "AQAAAAIAAYagAAAAEGUiZpQwMnM5nDsNDGxHaQWLk5JYfzPoBn3mGnprPilBvsbJAu8CpipVWx7qPRIM/A==", null, true, "", false, "admin" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "B8A06B29-B30F-4126-ADB2-2E715980FB48", "F44ABC2E-C878-4B95-9445-6B6E9CD8079E" });
+            migrationBuilder.CreateIndex(
+                name: "IX_Animes_GenreId",
+                table: "Animes",
+                column: "GenreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -247,16 +239,14 @@ namespace Yummyanime.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Services_ServiceCategoryId",
-                table: "Services",
-                column: "ServiceCategoryId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Animes");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -273,16 +263,13 @@ namespace Yummyanime.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Services");
+                name: "Genres");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "ServiceCategories");
         }
     }
 }
