@@ -12,11 +12,7 @@ using Yummyanime.Domain.Entities;
 namespace Yummyanime.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-<<<<<<<< HEAD:Yummyanime/Migrations/20260418124108_InitialCreate.Designer.cs
-    [Migration("20260418124108_InitialCreate")]
-========
-    [Migration("20260418130847_InitialCreate")]
->>>>>>>> 2f86598298868c606f818f6dbb6abe0beccbc3af:Yummyanime/Migrations/20260418130847_InitialCreate.Designer.cs
+    [Migration("20260418134101_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -54,18 +50,6 @@ namespace Yummyanime.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-<<<<<<<< HEAD:Yummyanime/Migrations/20260418124108_InitialCreate.Designer.cs
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "B8A06B29-B30F-4126-ADB2-2E715980FB48",
-                            ConcurrencyStamp = "6a37a6db-7c9e-48b7-a0cf-db797f845ac1",
-                            Name = "admin",
-                            NormalizedName = "ADMIN"
-                        });
-========
->>>>>>>> 2f86598298868c606f818f6dbb6abe0beccbc3af:Yummyanime/Migrations/20260418130847_InitialCreate.Designer.cs
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -156,27 +140,6 @@ namespace Yummyanime.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-<<<<<<<< HEAD:Yummyanime/Migrations/20260418124108_InitialCreate.Designer.cs
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "F44ABC2E-C878-4B95-9445-6B6E9CD8079E",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "397af1e9-cb9d-4515-a443-34392f3f2ec6",
-                            Email = "admin@admin.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "admin@admin.com",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIRA9QZjx+xS/DECvXxbXjhWfW80I2V4LZDCo3nMbgGTUxdtw8QNfzeeHy2uhU3GJg==",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        });
-========
->>>>>>>> 2f86598298868c606f818f6dbb6abe0beccbc3af:Yummyanime/Migrations/20260418130847_InitialCreate.Designer.cs
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>

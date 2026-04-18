@@ -196,27 +196,10 @@ namespace Yummyanime.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-<<<<<<<< HEAD:Yummyanime/Migrations/20260418124108_InitialCreate.cs
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "B8A06B29-B30F-4126-ADB2-2E715980FB48", "6a37a6db-7c9e-48b7-a0cf-db797f845ac1", "admin", "ADMIN" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "F44ABC2E-C878-4B95-9445-6B6E9CD8079E", 0, "397af1e9-cb9d-4515-a443-34392f3f2ec6", "admin@admin.com", true, false, null, "admin@admin.com", "ADMIN", "AQAAAAIAAYagAAAAEIRA9QZjx+xS/DECvXxbXjhWfW80I2V4LZDCo3nMbgGTUxdtw8QNfzeeHy2uhU3GJg==", null, true, "", false, "admin" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "B8A06B29-B30F-4126-ADB2-2E715980FB48", "F44ABC2E-C878-4B95-9445-6B6E9CD8079E" });
-========
             migrationBuilder.CreateIndex(
                 name: "IX_Animes_GenreId",
                 table: "Animes",
                 column: "GenreId");
->>>>>>>> 2f86598298868c606f818f6dbb6abe0beccbc3af:Yummyanime/Migrations/20260418130847_InitialCreate.cs
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
