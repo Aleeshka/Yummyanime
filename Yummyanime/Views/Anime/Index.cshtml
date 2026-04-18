@@ -36,7 +36,7 @@ _ => "year_desc"
                             <a asp-area="" asp-controller="Anime" asp-action="Show" asp-route-id="@entity.Id" class="poster-link">
                                 <img src="@(string.IsNullOrWhiteSpace(entity.PhotoFileName) ? Url.Content("~/img/default-poster.svg") : Url.Content($"~/img/{entity.PhotoFileName}"))" alt="@entity.Title" loading="lazy" />
                                 <div class="poster-overlay">
-                                    <h3>@entity.Title</h3>
+                                    <h3 title="@entity.Title">@entity.Title</h3>
                                 </div>
                             </a>
                             <div class="poster-meta">
@@ -64,7 +64,7 @@ _ => "year_desc"
                         }
                         else
                         {
-                            <a asp-controller="Anime" asp-action="Index" asp-route-page="@i" asp-route-sort="@safeSort" asp-route-search="@Model.Search">@i</a>
+                            <a asp-controller="Anime" asp-action="Index" asp-route-page="@i" asp-route-sort="@safeSort" asp-route-search="@Model.Search" aria-label="Перейти на страницу @i">@i</a>
                         }
                     }
                 </nav>
