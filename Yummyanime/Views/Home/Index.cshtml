@@ -3,17 +3,28 @@
 AppConfig? appConfig = config.GetSection("Project").Get<AppConfig>();
 IEnumerable<AnimeDTO> topRated = ViewBag.TopRated as IEnumerable<AnimeDTO> ?? Enumerable.Empty<AnimeDTO>();
 IEnumerable<AnimeDTO> latest = ViewBag.Latest as IEnumerable<AnimeDTO> ?? Enumerable.Empty<AnimeDTO>();
+IEnumerable<AnimeDTO> homeShowcase = topRated.Any() ? topRated : latest;
+AnimeDTO? featured = homeShowcase.FirstOrDefault();
+string featuredPoster = featured is null || string.IsNullOrWhiteSpace(featured.PhotoFileName)
+    ? Url.Content("~/img/default-poster.svg")
+    : Url.Content($"~/img/{featured.PhotoFileName}");
+bool hasRandomCandidate = homeShowcase.Any();
 }
 <div class="col-12">
 <div id="content">
-<section class="portal-hero">
+<section class="portal-hero glass-panel" style="--portal-hero-image: url('@featuredPoster')">
     <div class="portal-hero-content">
+        <p class="hero-kicker">YummyAnime Portal</p>
         <h2>Добро пожаловать в @appConfig?.Company.CompanyName</h2>
-        <p>Твой тёмный портал в мир аниме: находи топовые тайтлы, обновления и самые свежие анонсы.</p>
+        <p>Открывай тайтлы с высоким рейтингом, отслеживай обновления и переходи в каталог за пару кликов.</p>
         <form method="get" asp-controller="Anime" asp-action="Index" class="portal-search-form">
             <input type="text" name="search" placeholder="Поиск аниме по названию..." />
             <button type="submit" class="button">Искать</button>
         </form>
+        <div class="hero-actions">
+            <a asp-area="" asp-controller="Anime" asp-action="Index" class="button">Перейти в каталог</a>
+            <button type="button" class="button alt js-random-top" disabled="@(!hasRandomCandidate)">Случайное</button>
+        </div>
     </div>
 </section>
 
@@ -22,10 +33,10 @@ IEnumerable<AnimeDTO> latest = ViewBag.Latest as IEnumerable<AnimeDTO> ?? Enumer
         <h2>Топ по рейтингу</h2>
     </header>
     <div class="top-rated-strip">
-        @foreach (AnimeDTO entity in topRated)
+        @foreach (AnimeDTO entity in homeShowcase)
         {
-            <a asp-area="" asp-controller="Anime" asp-action="Show" asp-route-id="@entity.Id" class="top-rated-card">
-                <img src="@(string.IsNullOrWhiteSpace(entity.PhotoFileName) ? Url.Content("~/img/bg001.jpg") : Url.Content($"~/img/{entity.PhotoFileName}"))" alt="@entity.Title" />
+            <a asp-area="" asp-controller="Anime" asp-action="Show" asp-route-id="@entity.Id" class="top-rated-card glass-panel" data-random-url="@Url.Action("Show", "Anime", new { id = entity.Id })">
+                <img src="@(string.IsNullOrWhiteSpace(entity.PhotoFileName) ? Url.Content("~/img/default-poster.svg") : Url.Content($"~/img/{entity.PhotoFileName}"))" alt="@entity.Title" loading="lazy" />
                 <span class="title">@entity.Title</span>
                 <span class="rating">★ @entity.Rating</span>
             </a>
@@ -74,3 +85,21 @@ IEnumerable<AnimeDTO> latest = ViewBag.Latest as IEnumerable<AnimeDTO> ?? Enumer
 </section>
 </div>
 </div>
+<script>
+    (function () {
+        const button = document.querySelector('.js-random-top');
+        if (!button || button.disabled) return;
+        button.addEventListener('click', function () {
+            const cards = Array.from(document.querySelectorAll('.top-rated-card[data-random-url]'));
+            if (!cards.length) {
+                window.location.href = '@Url.Action("Index", "Anime")';
+                return;
+            }
+            const randomCard = cards[Math.floor(Math.random() * cards.length)];
+            const randomUrl = randomCard.getAttribute('data-random-url');
+            if (randomUrl) {
+                window.location.href = randomUrl;
+            }
+        });
+    })();
+</script>
