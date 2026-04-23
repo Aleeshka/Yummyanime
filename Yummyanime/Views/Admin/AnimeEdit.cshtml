@@ -54,6 +54,16 @@ ViewBag.Title = strTitle;
 </div>
 
 <div class="div-box">
+<label asp-for="VideoUrl"></label>
+<input asp-for="VideoUrl" placeholder="https://www.youtube.com/embed/... или https://kodikplayer.com/seria/..." />
+<span asp-validation-for="VideoUrl"></span>
+<small>
+    YouTube: скопируйте VIDEO_ID из ссылки и вставьте: https://www.youtube.com/embed/VIDEO_ID<br/>
+    Kodik: скопируйте весь URL из плеера (https://kodikplayer.com/seria/...)
+</small>
+</div>
+
+<div class="div-box">
 <label asp-for="Photo"></label>
 <input type="file" name="titleImageFile" id="titleImageFile" />
 @if (!string.IsNullOrWhiteSpace(Model.Photo))

@@ -28,5 +28,9 @@ namespace Yummyanime.Domain.Entities
         [Display(Name = "Рейтинг")]
         [Range(typeof(decimal), "0", "10", ErrorMessage = "Рейтинг должен быть от 0 до 10")]
         public decimal Rating { get; set; }
+
+        [Display(Name = "Ссылка на видео")]
+        [MaxLength(500)]
+        public string? VideoUrl { get; set; }
     }
 }

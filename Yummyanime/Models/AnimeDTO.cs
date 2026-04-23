@@ -10,5 +10,6 @@ namespace Yummyanime.Models
         public string? PhotoFileName { get; set; }
         public int Year { get; set; }
         public decimal Rating { get; set; }
+        public string? VideoUrl { get; set; }
     }
 }
