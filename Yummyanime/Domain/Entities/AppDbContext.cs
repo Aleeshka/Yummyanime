@@ -25,7 +25,7 @@ namespace Yummyanime.Domain.Entities
                 .HasOne(x => x.Genre)
                 .WithMany(x => x.Animes)
                 .HasForeignKey(x => x.GenreId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
