@@ -16,7 +16,8 @@ namespace Yummyanime.Infrastructure
                 Description = entity.Description,
                 PhotoFileName = entity.Photo,
                 Year = entity.Year,
-                Rating = entity.Rating
+                Rating = entity.Rating,
+                VideoUrl = entity.VideoUrl
             };
         }
 
