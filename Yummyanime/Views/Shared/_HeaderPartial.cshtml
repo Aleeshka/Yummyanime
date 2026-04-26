@@ -17,6 +17,19 @@
             <a asp-controller="Home" asp-action="Index">@L["Nav_Home"]</a>
             <a asp-controller="Anime" asp-action="Index">@L["Nav_Anime"]</a>
             <a asp-controller="Home" asp-action="Contacts">@L["Nav_Contacts"]</a>
+
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a asp-controller="Account" asp-action="Profile">@L["Nav_Profile"]</a>
+                <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline;">
+                    <button type="submit" class="button alt" style="margin-left:.5rem;">@L["Nav_Logout"]</button>
+                </form>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login">@L["Nav_Login"]</a>
+                <a asp-controller="Account" asp-action="Register">@L["Nav_Register"]</a>
+            }
         </nav>
 
         <form asp-controller="Culture" asp-action="SetLanguage" method="post" style="margin-left:1rem;">

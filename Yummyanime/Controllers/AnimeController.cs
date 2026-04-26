@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Yummyanime.Domain;
 using Yummyanime.Domain.Entities;
@@ -75,8 +77,51 @@ namespace Yummyanime.Controllers
                 return NotFound();
             }
 
+            bool isFavorite = false;
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                isFavorite = await _dataManager.UserAnimeFavorites.IsInFavoritesAsync(userId, id);
+            }
+
+            ViewBag.IsFavorite = isFavorite;
             AnimeDTO entityDTO = HelperDTO.TransformAnime(entity);
             return View(entityDTO);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ToggleFavorite(int id, string? returnUrl)
+        {
+            Anime? anime = await _dataManager.Anime.GetAnimeByIdAsync(id);
+            if (anime is null)
+            {
+                return NotFound();
+            }
+
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            bool isFavorite = await _dataManager.UserAnimeFavorites.IsInFavoritesAsync(userId, id);
+            if (isFavorite)
+            {
+                await _dataManager.UserAnimeFavorites.RemoveAsync(userId, id);
+            }
+            else
+            {
+                await _dataManager.UserAnimeFavorites.AddAsync(userId, id);
+            }
+
+            if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return LocalRedirect(returnUrl);
+            }
+
+            return RedirectToAction(nameof(Show), new { id });
         }
     }
 }

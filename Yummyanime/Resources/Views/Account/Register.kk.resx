@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="Title" xml:space="preserve"><value>Тіркелу</value></data>
+  <data name="UserName_Label" xml:space="preserve"><value>Логин</value></data>
+  <data name="Email_Label" xml:space="preserve"><value>Email</value></data>
+  <data name="Password_Label" xml:space="preserve"><value>Құпиясөз</value></data>
+  <data name="ConfirmPassword_Label" xml:space="preserve"><value>Құпиясөзді растау</value></data>
+  <data name="Register_Button" xml:space="preserve"><value>Аккаунт ашу</value></data>
+  <data name="Login_Link" xml:space="preserve"><value>Менде аккаунт бар</value></data>
+</root>

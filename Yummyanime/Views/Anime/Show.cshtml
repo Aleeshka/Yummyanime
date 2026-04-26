@@ -2,6 +2,8 @@
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
 @{
     ViewBag.Title = Model.Title;
+    bool isFavorite = ViewBag.IsFavorite is bool value && value;
+    string returnUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
 }
 
 <div class="col-12">
@@ -42,6 +44,24 @@
             </div>
             <div class="anime-show-details">
                 <h2>@Model.Title</h2>
+
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <form asp-controller="Anime" asp-action="ToggleFavorite" method="post" style="margin-bottom: 1rem;">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <input type="hidden" name="returnUrl" value="@returnUrl" />
+                        <button type="submit" class="button">
+                            @(isFavorite ? L["RemoveFromFavorites"] : L["AddToFavorites"])
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <p>
+                        <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@returnUrl">@L["Login_Link"]</a>
+                        @L["LoginToUseFavorites"]
+                    </p>
+                }
 
                 <div class="anime-detail-line">
                     <span>@L["Genre_Label"]:</span>

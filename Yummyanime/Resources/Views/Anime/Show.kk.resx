@@ -6,4 +6,8 @@
   <data name="Rating_Label" xml:space="preserve"><value>Рейтинг</value></data>
   <data name="Description_Label" xml:space="preserve"><value>Сипаттама</value></data>
   <data name="Description_Empty" xml:space="preserve"><value>Сипаттама жоқ.</value></data>
+  <data name="AddToFavorites" xml:space="preserve"><value>Таңдаулыларға қосу</value></data>
+  <data name="RemoveFromFavorites" xml:space="preserve"><value>Таңдаулылардан алып тастау</value></data>
+  <data name="Login_Link" xml:space="preserve"><value>Кіріңіз</value></data>
+  <data name="LoginToUseFavorites" xml:space="preserve"><value>, таңдаулыларды қолдану үшін.</value></data>
 </root>

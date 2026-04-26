@@ -1,0 +1,49 @@
+@model RegisterViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
+@{
+    string strTitle = L["Title"].Value;
+    ViewBag.Title = strTitle;
+}
+
+<div class="col-12">
+    <div id="content">
+        <section class="glass-panel" style="padding:1rem;">
+            <header class="major">
+                <h2>@strTitle</h2>
+            </header>
+
+            <form asp-controller="Account" asp-action="Register" method="post" asp-route-returnUrl="@ViewBag.ReturnUrl">
+                <div asp-validation-summary="All"></div>
+
+                <div class="div-box">
+                    <label asp-for="UserName">@L["UserName_Label"]</label>
+                    <input asp-for="UserName" />
+                    <span asp-validation-for="UserName"></span>
+                </div>
+
+                <div class="div-box">
+                    <label asp-for="Email">@L["Email_Label"]</label>
+                    <input asp-for="Email" />
+                    <span asp-validation-for="Email"></span>
+                </div>
+
+                <div class="div-box">
+                    <label asp-for="Password">@L["Password_Label"]</label>
+                    <input asp-for="Password" />
+                    <span asp-validation-for="Password"></span>
+                </div>
+
+                <div class="div-box">
+                    <label asp-for="ConfirmPassword">@L["ConfirmPassword_Label"]</label>
+                    <input asp-for="ConfirmPassword" />
+                    <span asp-validation-for="ConfirmPassword"></span>
+                </div>
+
+                <div class="div-box">
+                    <button type="submit" class="button">@L["Register_Button"]</button>
+                    <a asp-controller="Account" asp-action="Login" class="button alt">@L["Login_Link"]</a>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>

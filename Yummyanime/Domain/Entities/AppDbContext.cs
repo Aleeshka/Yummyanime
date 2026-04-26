@@ -8,6 +8,7 @@ namespace Yummyanime.Domain.Entities
     {
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Anime> Animes { get; set; }
+        public DbSet<UserAnimeFavorite> UserAnimeFavorites { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -25,6 +26,21 @@ namespace Yummyanime.Domain.Entities
                 .HasOne(x => x.Genre)
                 .WithMany(x => x.Animes)
                 .HasForeignKey(x => x.GenreId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<UserAnimeFavorite>()
+                .HasKey(x => new { x.UserId, x.AnimeId });
+
+            builder.Entity<UserAnimeFavorite>()
+                .HasOne(x => x.User)
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<UserAnimeFavorite>()
+                .HasOne(x => x.Anime)
+                .WithMany()
+                .HasForeignKey(x => x.AnimeId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

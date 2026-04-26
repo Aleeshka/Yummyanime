@@ -3,6 +3,10 @@
   <data name="Nav_Home" xml:space="preserve"><value>Главная</value></data>
   <data name="Nav_Anime" xml:space="preserve"><value>Аниме</value></data>
   <data name="Nav_Contacts" xml:space="preserve"><value>Контакты</value></data>
+  <data name="Nav_Login" xml:space="preserve"><value>Вход</value></data>
+  <data name="Nav_Register" xml:space="preserve"><value>Регистрация</value></data>
+  <data name="Nav_Profile" xml:space="preserve"><value>Профиль</value></data>
+  <data name="Nav_Logout" xml:space="preserve"><value>Выход</value></data>
   <data name="Lang_Kk" xml:space="preserve"><value>Қазақша</value></data>
   <data name="Lang_Ru" xml:space="preserve"><value>Русский</value></data>
 </root>

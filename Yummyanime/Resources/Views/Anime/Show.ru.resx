@@ -6,4 +6,8 @@
   <data name="Rating_Label" xml:space="preserve"><value>Рейтинг</value></data>
   <data name="Description_Label" xml:space="preserve"><value>Описание</value></data>
   <data name="Description_Empty" xml:space="preserve"><value>Описание отсутствует.</value></data>
+  <data name="AddToFavorites" xml:space="preserve"><value>Добавить в избранное</value></data>
+  <data name="RemoveFromFavorites" xml:space="preserve"><value>Убрать из избранного</value></data>
+  <data name="Login_Link" xml:space="preserve"><value>Войдите</value></data>
+  <data name="LoginToUseFavorites" xml:space="preserve"><value>, чтобы пользоваться избранным.</value></data>
 </root>

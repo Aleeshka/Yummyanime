@@ -1,0 +1,44 @@
+@model ProfileViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
+@{
+    string strTitle = L["Title"].Value;
+    ViewBag.Title = strTitle;
+}
+
+<div class="col-12">
+    <div id="content">
+        <section class="glass-panel" style="padding:1rem;">
+            <header class="major">
+                <h2>@strTitle</h2>
+            </header>
+
+            <div class="anime-detail-line">
+                <span>@L["UserName_Label"]:</span>
+                <span>@Model.UserName</span>
+            </div>
+            <div class="anime-detail-line">
+                <span>@L["Email_Label"]:</span>
+                <span>@Model.Email</span>
+            </div>
+
+            <h3 style="margin-top:1rem;">@L["Favorites_Title"]</h3>
+
+            @if (Model.FavoriteAnime.Any())
+            {
+                <ul>
+                    @foreach (AnimeDTO anime in Model.FavoriteAnime)
+                    {
+                        <li>
+                            <a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a>
+                            <span>(@anime.Year, ★ @anime.Rating)</span>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>@L["Favorites_Empty"]</p>
+            }
+        </section>
+    </div>
+</div>

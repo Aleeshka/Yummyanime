@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="Title" xml:space="preserve"><value>Пайдаланушы профилі</value></data>
+  <data name="UserName_Label" xml:space="preserve"><value>Логин</value></data>
+  <data name="Email_Label" xml:space="preserve"><value>Email</value></data>
+  <data name="Favorites_Title" xml:space="preserve"><value>Таңдаулылар</value></data>
+  <data name="Favorites_Empty" xml:space="preserve"><value>Әзірге таңдаулыларға ештеңе қоспадыңыз.</value></data>
+</root>
