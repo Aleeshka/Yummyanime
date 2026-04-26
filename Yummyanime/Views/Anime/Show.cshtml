@@ -1,17 +1,16 @@
 @model AnimeDTO
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
 @{
     ViewBag.Title = Model.Title;
 }
 
 <div class="col-12">
     <div id="content">
-        <!-- Плеер видео -->
         @if (!string.IsNullOrEmpty(Model.VideoUrl))
         {
             <section class="anime-show-hero glass-panel">
                 @if (Model.VideoUrl.Contains("kodikplayer.com"))
                 {
-                    <!-- Kodik плеер -->
                     <div class="video-player">
                         <iframe src="@Model.VideoUrl"
                                 title="Kodik Player"
@@ -24,7 +23,6 @@
                 }
                 else
                 {
-                    <!-- YouTube плеер -->
                     <div class="video-player">
                         <iframe src="@Model.VideoUrl"
                                 title="YouTube Player"
@@ -37,7 +35,6 @@
             </section>
         }
 
-        <!-- Информация об аниме -->
         <section class="anime-show-layout glass-panel">
             <div class="anime-show-poster">
                 <img src="@(string.IsNullOrWhiteSpace(Model.PhotoFileName) ? Url.Content("~/img/poster-placeholder.svg") : Url.Content($"~/img/{Model.PhotoFileName}"))"
@@ -45,22 +42,26 @@
             </div>
             <div class="anime-show-details">
                 <h2>@Model.Title</h2>
+
                 <div class="anime-detail-line">
-                    <span>Жанр:</span>
-                    <span>@(string.IsNullOrWhiteSpace(Model.GenreName) ? "Не указан" : Model.GenreName)</span>
+                    <span>@L["Genre_Label"]:</span>
+                    <span>@(string.IsNullOrWhiteSpace(Model.GenreName) ? L["Genre_Empty"] : Model.GenreName)</span>
                 </div>
+
                 <div class="anime-detail-line">
-                    <span>Год:</span>
+                    <span>@L["Year_Label"]:</span>
                     <span>@Model.Year</span>
                 </div>
+
                 <div class="anime-detail-line">
-                    <span>Рейтинг:</span>
+                    <span>@L["Rating_Label"]:</span>
                     <span>★ @Model.Rating</span>
                 </div>
+
                 <div class="anime-detail-line">
-                    <span>Описание:</span>
+                    <span>@L["Description_Label"]:</span>
                 </div>
-                <p>@Model.Description</p>
+                <p>@(string.IsNullOrWhiteSpace(Model.Description) ? L["Description_Empty"] : Model.Description)</p>
             </div>
         </section>
     </div>
@@ -83,7 +84,7 @@
     position: relative;
     z-index: 1;
     width: 100%;
-    padding-bottom: 56.25%; /* 16:9 */
+    padding-bottom: 56.25%;
     height: 0;
     overflow: hidden;
     margin-bottom: 2rem;

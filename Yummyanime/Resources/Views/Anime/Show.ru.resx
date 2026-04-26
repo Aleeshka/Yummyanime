@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="Genre_Label" xml:space="preserve"><value>Жанр</value></data>
+  <data name="Genre_Empty" xml:space="preserve"><value>Не указан</value></data>
+  <data name="Year_Label" xml:space="preserve"><value>Год</value></data>
+  <data name="Rating_Label" xml:space="preserve"><value>Рейтинг</value></data>
+  <data name="Description_Label" xml:space="preserve"><value>Описание</value></data>
+  <data name="Description_Empty" xml:space="preserve"><value>Описание отсутствует.</value></data>
+</root>
