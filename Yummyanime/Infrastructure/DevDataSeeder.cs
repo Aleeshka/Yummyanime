@@ -11,7 +11,7 @@ namespace Yummyanime.Infrastructure
             using IServiceScope scope = services.CreateScope();
             AppDbContext dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             RoleManager<IdentityRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            UserManager<IdentityUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            UserManager<AppUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
 
             await dbContext.Database.MigrateAsync();
 
@@ -24,14 +24,16 @@ namespace Yummyanime.Infrastructure
                 await roleManager.CreateAsync(new IdentityRole(adminRole));
             }
 
-            IdentityUser? admin = await userManager.FindByEmailAsync(adminEmail);
+            AppUser? admin = await userManager.FindByEmailAsync(adminEmail);
             if (admin is null)
             {
-                admin = new IdentityUser
+                admin = new AppUser
                 {
                     UserName = adminEmail,
+                    DisplayName = "Administrator",
                     Email = adminEmail,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    AvatarFileName = null
                 };
 
                 IdentityResult createResult = await userManager.CreateAsync(admin, adminPassword);

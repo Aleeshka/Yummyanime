@@ -11,18 +11,21 @@ namespace Yummyanime.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly DataManager _dataManager;
+        private readonly IWebHostEnvironment _env;
 
         public AccountController(
-            SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager,
-            DataManager dataManager)
+            SignInManager<AppUser> signInManager,
+            UserManager<AppUser> userManager,
+            DataManager dataManager,
+            IWebHostEnvironment env)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _dataManager = dataManager;
+            _env = env;
         }
 
         [HttpGet]
@@ -60,18 +63,22 @@ namespace Yummyanime.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string? returnUrl)
+        public async Task<IActionResult> Register(RegisterViewModel model, IFormFile? avatarFile, string? returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
 
             if (!ModelState.IsValid)
                 return View(model);
 
-            IdentityUser user = new IdentityUser
+            string? avatarFileName = await SaveAvatarAsync(avatarFile);
+
+            AppUser user = new AppUser
             {
                 UserName = model.UserName,
+                DisplayName = model.DisplayName,
                 Email = model.Email,
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                AvatarFileName = avatarFileName
             };
 
             IdentityResult createResult = await _userManager.CreateAsync(user, model.Password!);
@@ -93,7 +100,7 @@ namespace Yummyanime.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
-            IdentityUser? user = await _userManager.GetUserAsync(User);
+            AppUser? user = await _userManager.GetUserAsync(User);
             if (user is null)
             {
                 return RedirectToAction("Login");
@@ -108,7 +115,9 @@ namespace Yummyanime.Controllers
             ProfileViewModel model = new ProfileViewModel
             {
                 UserName = user.UserName ?? string.Empty,
+                DisplayName = user.DisplayName ?? (user.UserName ?? string.Empty),
                 Email = user.Email ?? string.Empty,
+                AvatarFileName = user.AvatarFileName,
                 FavoriteAnime = HelperDTO.TransformAnime(favorites).ToList(),
                 WatchingAnime = HelperDTO.TransformAnime(watching).ToList(),
                 PlannedAnime = HelperDTO.TransformAnime(planned).ToList(),
@@ -126,6 +135,26 @@ namespace Yummyanime.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        private async Task<string?> SaveAvatarAsync(IFormFile? avatarFile)
+        {
+            if (avatarFile is null || avatarFile.Length == 0)
+            {
+                return null;
+            }
+
+            string uploadsDir = Path.Combine(_env.WebRootPath, "img", "avatars");
+            Directory.CreateDirectory(uploadsDir);
+
+            string ext = Path.GetExtension(avatarFile.FileName).ToLowerInvariant();
+            string fileName = $"avatar-{Guid.NewGuid():N}{ext}";
+            string filePath = Path.Combine(uploadsDir, fileName);
+
+            await using FileStream fs = new(filePath, FileMode.Create);
+            await avatarFile.CopyToAsync(fs);
+
+            return fileName;
         }
     }
 }

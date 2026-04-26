@@ -34,7 +34,7 @@ namespace Yummyanime
             builder.Services.AddTransient<IUserAnimeFavoritesRepository, EFUserAnimeFavoritesRepository>();
             builder.Services.AddTransient<DataManager>();
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequiredLength = 6;

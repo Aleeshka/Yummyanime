@@ -9,6 +9,10 @@ namespace Yummyanime.Models
         public string? UserName { get; set; }
 
         [Required]
+        [Display(Name = "Отображаемое имя")]
+        public string? DisplayName { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string? Email { get; set; }

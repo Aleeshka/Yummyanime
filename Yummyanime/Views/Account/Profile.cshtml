@@ -3,6 +3,9 @@
 @{
     string strTitle = L["Title"].Value;
     ViewBag.Title = strTitle;
+    string avatarUrl = string.IsNullOrWhiteSpace(Model.AvatarFileName)
+        ? Url.Content("~/img/poster-placeholder.svg")
+        : Url.Content($"~/img/avatars/{Model.AvatarFileName}");
 }
 
 <div class="col-12">
@@ -12,48 +15,33 @@
                 <h2>@strTitle</h2>
             </header>
 
-            <div class="anime-detail-line">
-                <span>@L["UserName_Label"]:</span>
-                <span>@Model.UserName</span>
-            </div>
-            <div class="anime-detail-line">
-                <span>@L["Email_Label"]:</span>
-                <span>@Model.Email</span>
+            <div style="display:flex; gap:1rem; align-items:center; margin-bottom:1rem;">
+                <img src="@avatarUrl" alt="@Model.DisplayName" style="width:96px;height:96px;border-radius:50%;object-fit:cover;" />
+                <div>
+                    <div><strong>@L["DisplayName_Label"]:</strong> @Model.DisplayName</div>
+                    <div><strong>@L["UserName_Label"]:</strong> @Model.UserName</div>
+                    <div><strong>@L["Email_Label"]:</strong> @Model.Email</div>
+                </div>
             </div>
 
             <h3 style="margin-top:1rem;">@L["Favorites_Title"]</h3>
-            @if (Model.FavoriteAnime.Any())
-            {
-                <ul>@foreach (AnimeDTO anime in Model.FavoriteAnime){<li><a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a></li>}</ul>
-            }
+            @if (Model.FavoriteAnime.Any()) { <ul>@foreach (AnimeDTO anime in Model.FavoriteAnime){<li><a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a></li>}</ul> }
             else { <p>@L["Favorites_Empty"]</p> }
 
             <h3>@L["Watching_Title"]</h3>
-            @if (Model.WatchingAnime.Any())
-            {
-                <ul>@foreach (AnimeDTO anime in Model.WatchingAnime){<li><a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a></li>}</ul>
-            }
+            @if (Model.WatchingAnime.Any()) { <ul>@foreach (AnimeDTO anime in Model.WatchingAnime){<li><a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a></li>}</ul> }
             else { <p>@L["Watching_Empty"]</p> }
 
             <h3>@L["Planned_Title"]</h3>
-            @if (Model.PlannedAnime.Any())
-            {
-                <ul>@foreach (AnimeDTO anime in Model.PlannedAnime){<li><a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a></li>}</ul>
-            }
+            @if (Model.PlannedAnime.Any()) { <ul>@foreach (AnimeDTO anime in Model.PlannedAnime){<li><a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a></li>}</ul> }
             else { <p>@L["Planned_Empty"]</p> }
 
             <h3>@L["Completed_Title"]</h3>
-            @if (Model.CompletedAnime.Any())
-            {
-                <ul>@foreach (AnimeDTO anime in Model.CompletedAnime){<li><a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a></li>}</ul>
-            }
+            @if (Model.CompletedAnime.Any()) { <ul>@foreach (AnimeDTO anime in Model.CompletedAnime){<li><a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a></li>}</ul> }
             else { <p>@L["Completed_Empty"]</p> }
 
             <h3>@L["Paused_Title"]</h3>
-            @if (Model.PausedAnime.Any())
-            {
-                <ul>@foreach (AnimeDTO anime in Model.PausedAnime){<li><a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a></li>}</ul>
-            }
+            @if (Model.PausedAnime.Any()) { <ul>@foreach (AnimeDTO anime in Model.PausedAnime){<li><a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a></li>}</ul> }
             else { <p>@L["Paused_Empty"]</p> }
         </section>
     </div>

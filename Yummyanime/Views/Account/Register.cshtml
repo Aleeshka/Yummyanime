@@ -12,13 +12,24 @@
                 <h2>@strTitle</h2>
             </header>
 
-            <form asp-controller="Account" asp-action="Register" method="post" asp-route-returnUrl="@ViewBag.ReturnUrl">
+            <form asp-controller="Account" asp-action="Register" method="post" enctype="multipart/form-data" asp-route-returnUrl="@ViewBag.ReturnUrl">
                 <div asp-validation-summary="All"></div>
 
                 <div class="div-box">
                     <label asp-for="UserName">@L["UserName_Label"]</label>
                     <input asp-for="UserName" />
                     <span asp-validation-for="UserName"></span>
+                </div>
+
+                <div class="div-box">
+                    <label asp-for="DisplayName">@L["DisplayName_Label"]</label>
+                    <input asp-for="DisplayName" />
+                    <span asp-validation-for="DisplayName"></span>
+                </div>
+
+                <div class="div-box">
+                    <label>@L["Avatar_Label"]</label>
+                    <input type="file" name="avatarFile" accept="image/*" />
                 </div>
 
                 <div class="div-box">
