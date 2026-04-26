@@ -1,4 +1,5 @@
 @inject IConfiguration config
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
 @{
 AppConfig? appConfig = config.GetSection("Project").Get<AppConfig>();
 IEnumerable<AnimeDTO> topRated = ViewBag.TopRated as IEnumerable<AnimeDTO> ?? Enumerable.Empty<AnimeDTO>();
@@ -14,24 +15,23 @@ bool hasRandomCandidate = homeShowcase.Any();
 <div id="content">
 <section class="portal-hero glass-panel" style="--portal-hero-image: url('@featuredPoster')">
     <div class="portal-hero-content">
-        <p class="hero-kicker">YummyAnime Portal</p>
-        <h2>Добро пожаловать в @appConfig?.Company.CompanyName</h2>
-        <p>Открывай тайтлы с высоким рейтингом, отслеживай обновления и переходи в каталог за пару кликов.</p>
+        <p class="hero-kicker">@L["Hero_Kicker"]</p>
+        <h2>@L["Hero_Title", appConfig?.Company.CompanyName ?? "YummyAnime"]</h2>
+        <p>@L["Hero_Description"]</p>
         <form method="get" asp-controller="Anime" asp-action="Index" class="portal-search-form">
-            <input type="text" name="search" placeholder="Поиск аниме по названию..." />
-            <button type="submit" class="button">Искать</button>
+            <input type="text" name="search" placeholder="@L["Search_Placeholder"]" />
+            <button type="submit" class="button">@L["Search_Button"]</button>
         </form>
         <div class="hero-actions">
-            <a asp-area="" asp-controller="Anime" asp-action="Index" class="button">Перейти в каталог</a>
-            <button type="button" class="button alt js-random-top" disabled="@(!hasRandomCandidate)">Случайное</button>
+            <a asp-area="" asp-controller="Anime" asp-action="Index" class="button">@L["GoToCatalog_Button"]</a>
+            <button type="button" class="button alt js-random-top" disabled="@(!hasRandomCandidate)">@L["Random_Button"]</button>
         </div>
     </div>
 </section>
 
 <section class="portal-section">
     <header class="major">
-           
-        <h2>Топ по рейтингу</h2>
+        <h2>@L["TopRated_Title"]</h2>
     </header>
     <div class="top-rated-strip">
         @foreach (AnimeDTO entity in homeShowcase)
@@ -47,7 +47,7 @@ bool hasRandomCandidate = homeShowcase.Any();
 
 <section class="portal-grid">
     <article class="portal-card">
-        <header class="major"><h3>Обновления</h3></header>
+        <header class="major"><h3>@L["Updates_Title"]</h3></header>
         @if (latest.Any())
         {
             <ul>
@@ -62,25 +62,25 @@ bool hasRandomCandidate = homeShowcase.Any();
         }
         else
         {
-            <p>Скоро здесь появятся свежие обновления.</p>
+            <p>@L["Updates_Empty"]</p>
         }
     </article>
 
     <article class="portal-card">
-        <header class="major"><h3>Новости</h3></header>
+        <header class="major"><h3>@L["News_Title"]</h3></header>
         <ul>
-            <li>Обновили темную тему портала и структуру главной страницы.</li>
-            <li>Каталог пополнился новыми карточками в топе по рейтингу.</li>
-            <li>Поддержка поиска с главной страницы теперь доступна в один клик.</li>
+            <li>@L["News_1"]</li>
+            <li>@L["News_2"]</li>
+            <li>@L["News_3"]</li>
         </ul>
     </article>
 
     <article class="portal-card">
-        <header class="major"><h3>Анонсы</h3></header>
+        <header class="major"><h3>@L["Announcements_Title"]</h3></header>
         <ul>
-            <li>Скоро: подборка «Лучшее сезона» с еженедельным обновлением.</li>
-            <li>В планах: расширенные фильтры по студии и длительности.</li>
-            <li>Следите за обновлениями — новые тайтлы уже на подходе.</li>
+            <li>@L["Announcements_1"]</li>
+            <li>@L["Announcements_2"]</li>
+            <li>@L["Announcements_3"]</li>
         </ul>
     </article>
 </section>

@@ -1,15 +1,16 @@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
 <div class="col-4 col-12-medium">
 <div id="sidebar">
 <section>
 <header class="major">
-<h2>Аниме-каталог</h2>
+<h2>@L["Title"]</h2>
 </header>
 <p>
-Собирайте свою коллекцию: выбирайте тайтлы по жанрам, году и рейтингу, чтобы не пропустить лучшее.
+@L["Description"]
 </p>
 <footer>
 <a asp-area="" asp-controller="Anime" asp-action="Index" class="button icon solid fa-info-circle">
-Открыть каталог
+@L["OpenCatalog_Button"]
 </a>
 </footer>
 </section>

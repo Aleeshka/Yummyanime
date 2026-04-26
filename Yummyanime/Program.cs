@@ -1,4 +1,6 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Serilog;
@@ -50,7 +52,32 @@ namespace Yummyanime
                 options.SlidingExpiration = true;
             });
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            builder.Services
+                .AddControllersWithViews()
+                .AddViewLocalization()
+                .AddDataAnnotationsLocalization();
+
+            builder.Services.Configure<RequestLocalizationOptions>(options =>
+            {
+                CultureInfo[] supportedCultures =
+                [
+                    new("kk-KZ"),
+                    new("ru-RU")
+                ];
+
+                options.DefaultRequestCulture = new RequestCulture("kk-KZ");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+
+                options.RequestCultureProviders =
+                [
+                    new CookieRequestCultureProvider(),
+                    new QueryStringRequestCultureProvider(),
+                    new AcceptLanguageHeaderRequestCultureProvider()
+                ];
+            });
 
             builder.Host.UseSerilog((context, configuration) =>
                 configuration.ReadFrom.Configuration(context.Configuration));
@@ -64,6 +91,11 @@ namespace Yummyanime
                 app.UseDeveloperExceptionPage();
                 await DevDataSeeder.SeedAsync(app.Services);
             }
+
+            RequestLocalizationOptions localizationOptions =
+                app.Services.GetRequiredService<Microsoft.Extensions.Options.IOptions<RequestLocalizationOptions>>().Value;
+
+            app.UseRequestLocalization(localizationOptions);
 
             app.UseStaticFiles();
             app.UseRouting();

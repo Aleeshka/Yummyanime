@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="Catalog_Title" xml:space="preserve"><value>Каталог аниме</value></data>
+  <data name="Search_Placeholder" xml:space="preserve"><value>Поиск по названию</value></data>
+  <data name="Sort_YearDesc" xml:space="preserve"><value>Год: сначала новые</value></data>
+  <data name="Sort_YearAsc" xml:space="preserve"><value>Год: сначала старые</value></data>
+  <data name="Sort_RatingDesc" xml:space="preserve"><value>Рейтинг: по убыванию</value></data>
+  <data name="Sort_RatingAsc" xml:space="preserve"><value>Рейтинг: по возрастанию</value></data>
+  <data name="Apply_Button" xml:space="preserve"><value>Применить</value></data>
+  <data name="NoGenre" xml:space="preserve"><value>Без жанра</value></data>
+  <data name="NothingFound" xml:space="preserve"><value>Ничего не найдено.</value></data>
+  <data name="Pagination_Aria" xml:space="preserve"><value>Пагинация каталога</value></data>
+  <data name="Pagination_GoToPage" xml:space="preserve"><value>Перейти на страницу {0}</value></data>
+</root>

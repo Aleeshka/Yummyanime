@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="Hero_Kicker" xml:space="preserve"><value>YummyAnime Portal</value></data>
+  <data name="Hero_Title" xml:space="preserve"><value>{0} порталына қош келдіңіз</value></data>
+  <data name="Hero_Description" xml:space="preserve"><value>Жоғары рейтингті тайтлдарды ашып, жаңартуларды бақылап, каталогқа бір-екі қадамда өтіңіз.</value></data>
+  <data name="Search_Placeholder" xml:space="preserve"><value>Аниме атауы бойынша іздеу...</value></data>
+  <data name="Search_Button" xml:space="preserve"><value>Іздеу</value></data>
+  <data name="GoToCatalog_Button" xml:space="preserve"><value>Каталогқа өту</value></data>
+  <data name="Random_Button" xml:space="preserve"><value>Кездейсоқ</value></data>
+  <data name="TopRated_Title" xml:space="preserve"><value>Рейтинг бойынша үздіктер</value></data>
+  <data name="Updates_Title" xml:space="preserve"><value>Жаңартулар</value></data>
+  <data name="Updates_Empty" xml:space="preserve"><value>Жақында мұнда жаңа жаңартулар пайда болады.</value></data>
+  <data name="News_Title" xml:space="preserve"><value>Жаңалықтар</value></data>
+  <data name="News_1" xml:space="preserve"><value>Порталдың қараңғы тақырыбы мен басты бет құрылымы жаңартылды.</value></data>
+  <data name="News_2" xml:space="preserve"><value>Каталог рейтингтегі жаңа карточкалармен толықты.</value></data>
+  <data name="News_3" xml:space="preserve"><value>Басты беттен іздеу енді бір шерту арқылы қолжетімді.</value></data>
+  <data name="Announcements_Title" xml:space="preserve"><value>Анонстар</value></data>
+  <data name="Announcements_1" xml:space="preserve"><value>Жақында: «Маусымның үздігі» жинағы апта сайын жаңарып отырады.</value></data>
+  <data name="Announcements_2" xml:space="preserve"><value>Жоспарда: студия және ұзақтығы бойынша кеңейтілген сүзгілер.</value></data>
+  <data name="Announcements_3" xml:space="preserve"><value>Жаңартуларды қадағалаңыз — жаңа тайтлдар жолда.</value></data>
+</root>

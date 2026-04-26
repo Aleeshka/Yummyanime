@@ -1,7 +1,8 @@
 ﻿@inject IConfiguration config
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
 @{
 	AppConfig? appConfig = config.GetSection("Project").Get<AppConfig>();
-	string strTitle = "Контактная информация";
+	string strTitle = L["Title"].Value;
 	ViewBag.Title = strTitle;
 }
 @await Html.PartialAsync("_SidebarPartial")
@@ -12,13 +13,13 @@
 				<h2>@strTitle</h2>
 			</header>
 			<div>
-				Телефон:
+				@L["Phone_Label"]:
 				<span class="text-bold">
 					<a href="tel:@appConfig?.Company.CompanyPhoneShort">@appConfig?.Company.CompanyPhone</a>
 				</span>
 			</div>
 			<div>
-				Email:
+				@L["Email_Label"]:
 				<span class="text-bold">
 					<a href="mailto:@appConfig?.Company.CompanyEmail">@appConfig?.Company.CompanyEmail</a>
 				</span>

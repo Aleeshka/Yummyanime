@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="Title" xml:space="preserve"><value>Аниме-каталог</value></data>
+  <data name="Description" xml:space="preserve"><value>Собирайте свою коллекцию: выбирайте тайтлы по жанрам, году и рейтингу, чтобы не пропустить лучшее.</value></data>
+  <data name="OpenCatalog_Button" xml:space="preserve"><value>Открыть каталог</value></data>
+</root>

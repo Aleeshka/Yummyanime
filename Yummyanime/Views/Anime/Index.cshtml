@@ -1,6 +1,7 @@
 @model AnimeCatalogViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
 @{
-string strTitle = "Каталог аниме";
+string strTitle = L["Catalog_Title"].Value;
 ViewBag.Title = strTitle;
 string safeSort = Model.Sort switch
 {
@@ -17,14 +18,14 @@ _ => "year_desc"
                 <h2 class="icon fa-photo-video">@strTitle</h2>
             </header>
             <form method="get" asp-controller="Anime" asp-action="Index" class="anime-filter-bar glass-panel">
-                <input type="text" name="search" value="@Model.Search" placeholder="Поиск по названию" />
+                <input type="text" name="search" value="@Model.Search" placeholder="@L["Search_Placeholder"]" />
                 <select name="sort">
-                    <option value="year_desc" selected="@(safeSort == "year_desc" ? "selected" : null)">Год: сначала новые</option>
-                    <option value="year_asc" selected="@(safeSort == "year_asc" ? "selected" : null)">Год: сначала старые</option>
-                    <option value="rating_desc" selected="@(safeSort == "rating_desc" ? "selected" : null)">Рейтинг: по убыванию</option>
-                    <option value="rating_asc" selected="@(safeSort == "rating_asc" ? "selected" : null)">Рейтинг: по возрастанию</option>
+                    <option value="year_desc" selected="@(safeSort == "year_desc" ? "selected" : null)">@L["Sort_YearDesc"]</option>
+                    <option value="year_asc" selected="@(safeSort == "year_asc" ? "selected" : null)">@L["Sort_YearAsc"]</option>
+                    <option value="rating_desc" selected="@(safeSort == "rating_desc" ? "selected" : null)">@L["Sort_RatingDesc"]</option>
+                    <option value="rating_asc" selected="@(safeSort == "rating_asc" ? "selected" : null)">@L["Sort_RatingAsc"]</option>
                 </select>
-                <button type="submit" class="button">Применить</button>
+                <button type="submit" class="button">@L["Apply_Button"]</button>
             </form>
 
             @if (Model.Items.Any())
@@ -42,7 +43,7 @@ _ => "year_desc"
                                 </div>
                             </a>
                             <div class="poster-meta">
-                                <span>@(string.IsNullOrWhiteSpace(entity.GenreName) ? "Без жанра" : entity.GenreName)</span>
+                                <span>@(string.IsNullOrWhiteSpace(entity.GenreName) ? L["NoGenre"] : entity.GenreName)</span>
                                 <span>@entity.Year</span>
                                 <span>★ @entity.Rating</span>
                             </div>
@@ -52,12 +53,12 @@ _ => "year_desc"
             }
             else
             {
-                <p>Ничего не найдено.</p>
+                <p>@L["NothingFound"]</p>
             }
 
             @if (Model.TotalPages > 1)
             {
-                <nav class="catalog-pagination glass-panel" aria-label="Пагинация каталога">
+                <nav class="catalog-pagination glass-panel" aria-label="@L["Pagination_Aria"]">
                     @for (int i = 1; i <= Model.TotalPages; i++)
                     {
                         if (i == Model.CurrentPage)
@@ -66,7 +67,7 @@ _ => "year_desc"
                         }
                         else
                         {
-                            <a asp-controller="Anime" asp-action="Index" asp-route-page="@i" asp-route-sort="@safeSort" asp-route-search="@Model.Search" aria-label="Перейти на страницу @i">@i</a>
+                            <a asp-controller="Anime" asp-action="Index" asp-route-page="@i" asp-route-sort="@safeSort" asp-route-search="@Model.Search" aria-label="@L["Pagination_GoToPage", i]">@i</a>
                         }
                     }
                 </nav>

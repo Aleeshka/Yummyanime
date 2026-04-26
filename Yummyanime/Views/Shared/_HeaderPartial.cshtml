@@ -1,4 +1,10 @@
-﻿<header id="site-header" class="ya-header">
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
+@{
+    string currentCulture = System.Globalization.CultureInfo.CurrentUICulture.Name;
+    string returnUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
+}
+
+<header id="site-header" class="ya-header">
     <div class="ya-header-bg"></div>
 
     <div class="container ya-header-inner">
@@ -8,9 +14,17 @@
         </a>
 
         <nav class="ya-nav">
-            <a asp-controller="Home" asp-action="Index">Главная</a>
-            <a asp-controller="Anime" asp-action="Index">Аниме</a>
-            <a asp-controller="Home" asp-action="Contacts">Контакты</a>
+            <a asp-controller="Home" asp-action="Index">@L["Nav_Home"]</a>
+            <a asp-controller="Anime" asp-action="Index">@L["Nav_Anime"]</a>
+            <a asp-controller="Home" asp-action="Contacts">@L["Nav_Contacts"]</a>
         </nav>
+
+        <form asp-controller="Culture" asp-action="SetLanguage" method="post" style="margin-left:1rem;">
+            <input type="hidden" name="returnUrl" value="@returnUrl" />
+            <select name="culture" onchange="this.form.submit()">
+                <option value="kk-KZ" selected="@(currentCulture == "kk-KZ")">@L["Lang_Kk"]</option>
+                <option value="ru-RU" selected="@(currentCulture == "ru-RU")">@L["Lang_Ru"]</option>
+            </select>
+        </form>
     </div>
 </header>
