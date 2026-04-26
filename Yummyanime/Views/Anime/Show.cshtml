@@ -2,7 +2,7 @@
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
 @{
     ViewBag.Title = Model.Title;
-    bool isFavorite = ViewBag.IsFavorite is bool value && value;
+    UserAnimeListStatus? currentStatus = ViewBag.CurrentStatus is UserAnimeListStatus s ? s : null;
     string returnUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
 }
 
@@ -47,12 +47,17 @@
 
                 @if (User.Identity?.IsAuthenticated == true)
                 {
-                    <form asp-controller="Anime" asp-action="ToggleFavorite" method="post" style="margin-bottom: 1rem;">
+                    <form asp-controller="Anime" asp-action="SetListStatus" method="post" style="margin-bottom: 1rem;">
                         <input type="hidden" name="id" value="@Model.Id" />
                         <input type="hidden" name="returnUrl" value="@returnUrl" />
-                        <button type="submit" class="button">
-                            @(isFavorite ? L["RemoveFromFavorites"] : L["AddToFavorites"])
-                        </button>
+                        <select name="status">
+                            <option value="Favorite" selected="@(currentStatus == UserAnimeListStatus.Favorite ? "selected" : null)">@L["Status_Favorite"]</option>
+                            <option value="Watching" selected="@(currentStatus == UserAnimeListStatus.Watching ? "selected" : null)">@L["Status_Watching"]</option>
+                            <option value="Planned" selected="@(currentStatus == UserAnimeListStatus.Planned ? "selected" : null)">@L["Status_Planned"]</option>
+                            <option value="Completed" selected="@(currentStatus == UserAnimeListStatus.Completed ? "selected" : null)">@L["Status_Completed"]</option>
+                            <option value="Paused" selected="@(currentStatus == UserAnimeListStatus.Paused ? "selected" : null)">@L["Status_Paused"]</option>
+                        </select>
+                        <button type="submit" class="button">@L["Status_Save"]</button>
                     </form>
                 }
                 else

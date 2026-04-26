@@ -16,24 +16,14 @@ namespace Yummyanime.Domain.Repositories.EntityFramework
         public async Task<bool> IsInFavoritesAsync(string userId, int animeId)
         {
             return await _context.UserAnimeFavorites
-                .AnyAsync(x => x.UserId == userId && x.AnimeId == animeId);
+                .AnyAsync(x => x.UserId == userId
+                               && x.AnimeId == animeId
+                               && x.Status == UserAnimeListStatus.Favorite);
         }
 
         public async Task AddAsync(string userId, int animeId)
         {
-            bool exists = await IsInFavoritesAsync(userId, animeId);
-            if (exists)
-            {
-                return;
-            }
-
-            _context.UserAnimeFavorites.Add(new UserAnimeFavorite
-            {
-                UserId = userId,
-                AnimeId = animeId
-            });
-
-            await _context.SaveChangesAsync();
+            await SetStatusAsync(userId, animeId, UserAnimeListStatus.Favorite);
         }
 
         public async Task RemoveAsync(string userId, int animeId)
@@ -50,10 +40,46 @@ namespace Yummyanime.Domain.Repositories.EntityFramework
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IReadOnlyCollection<Anime>> GetFavoriteAnimeByUserIdAsync(string userId)
+        public async Task SetStatusAsync(string userId, int animeId, UserAnimeListStatus status)
+        {
+            UserAnimeFavorite? entity = await _context.UserAnimeFavorites
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.AnimeId == animeId);
+
+            if (entity is null)
+            {
+                entity = new UserAnimeFavorite
+                {
+                    UserId = userId,
+                    AnimeId = animeId,
+                    Status = status
+                };
+                _context.UserAnimeFavorites.Add(entity);
+            }
+            else
+            {
+                entity.Status = status;
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<UserAnimeListStatus?> GetStatusAsync(string userId, int animeId)
         {
             return await _context.UserAnimeFavorites
-                .Where(x => x.UserId == userId)
+                .Where(x => x.UserId == userId && x.AnimeId == animeId)
+                .Select(x => (UserAnimeListStatus?)x.Status)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<IReadOnlyCollection<Anime>> GetFavoriteAnimeByUserIdAsync(string userId)
+        {
+            return await GetAnimeByUserAndStatusAsync(userId, UserAnimeListStatus.Favorite);
+        }
+
+        public async Task<IReadOnlyCollection<Anime>> GetAnimeByUserAndStatusAsync(string userId, UserAnimeListStatus status)
+        {
+            return await _context.UserAnimeFavorites
+                .Where(x => x.UserId == userId && x.Status == status)
                 .Include(x => x.Anime)
                     .ThenInclude(a => a!.Genre)
                 .OrderByDescending(x => x.CreatedAt)

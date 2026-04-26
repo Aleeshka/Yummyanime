@@ -6,8 +6,14 @@
   <data name="Rating_Label" xml:space="preserve"><value>Рейтинг</value></data>
   <data name="Description_Label" xml:space="preserve"><value>Описание</value></data>
   <data name="Description_Empty" xml:space="preserve"><value>Описание отсутствует.</value></data>
-  <data name="AddToFavorites" xml:space="preserve"><value>Добавить в избранное</value></data>
-  <data name="RemoveFromFavorites" xml:space="preserve"><value>Убрать из избранного</value></data>
+
   <data name="Login_Link" xml:space="preserve"><value>Войдите</value></data>
-  <data name="LoginToUseFavorites" xml:space="preserve"><value>, чтобы пользоваться избранным.</value></data>
+  <data name="LoginToUseFavorites" xml:space="preserve"><value>, чтобы пользоваться списками.</value></data>
+
+  <data name="Status_Favorite" xml:space="preserve"><value>Избранное</value></data>
+  <data name="Status_Watching" xml:space="preserve"><value>Смотрю</value></data>
+  <data name="Status_Planned" xml:space="preserve"><value>В планах</value></data>
+  <data name="Status_Completed" xml:space="preserve"><value>Просмотрено</value></data>
+  <data name="Status_Paused" xml:space="preserve"><value>Отложено</value></data>
+  <data name="Status_Save" xml:space="preserve"><value>Сохранить</value></data>
 </root>

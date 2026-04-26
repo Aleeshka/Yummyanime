@@ -22,23 +22,39 @@
             </div>
 
             <h3 style="margin-top:1rem;">@L["Favorites_Title"]</h3>
-
             @if (Model.FavoriteAnime.Any())
             {
-                <ul>
-                    @foreach (AnimeDTO anime in Model.FavoriteAnime)
-                    {
-                        <li>
-                            <a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a>
-                            <span>(@anime.Year, ★ @anime.Rating)</span>
-                        </li>
-                    }
-                </ul>
+                <ul>@foreach (AnimeDTO anime in Model.FavoriteAnime){<li><a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a></li>}</ul>
             }
-            else
+            else { <p>@L["Favorites_Empty"]</p> }
+
+            <h3>@L["Watching_Title"]</h3>
+            @if (Model.WatchingAnime.Any())
             {
-                <p>@L["Favorites_Empty"]</p>
+                <ul>@foreach (AnimeDTO anime in Model.WatchingAnime){<li><a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a></li>}</ul>
             }
+            else { <p>@L["Watching_Empty"]</p> }
+
+            <h3>@L["Planned_Title"]</h3>
+            @if (Model.PlannedAnime.Any())
+            {
+                <ul>@foreach (AnimeDTO anime in Model.PlannedAnime){<li><a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a></li>}</ul>
+            }
+            else { <p>@L["Planned_Empty"]</p> }
+
+            <h3>@L["Completed_Title"]</h3>
+            @if (Model.CompletedAnime.Any())
+            {
+                <ul>@foreach (AnimeDTO anime in Model.CompletedAnime){<li><a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a></li>}</ul>
+            }
+            else { <p>@L["Completed_Empty"]</p> }
+
+            <h3>@L["Paused_Title"]</h3>
+            @if (Model.PausedAnime.Any())
+            {
+                <ul>@foreach (AnimeDTO anime in Model.PausedAnime){<li><a asp-controller="Anime" asp-action="Show" asp-route-id="@anime.Id">@anime.Title</a></li>}</ul>
+            }
+            else { <p>@L["Paused_Empty"]</p> }
         </section>
     </div>
 </div>
