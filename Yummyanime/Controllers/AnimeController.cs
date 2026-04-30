@@ -85,8 +85,62 @@ namespace Yummyanime.Controllers
             }
 
             ViewBag.CurrentStatus = currentStatus;
-            AnimeDTO entityDTO = HelperDTO.TransformAnime(entity);
-            return View(entityDTO);
+
+            AnimeShowViewModel model = new AnimeShowViewModel
+            {
+                Anime = HelperDTO.TransformAnime(entity),
+                Comments = (await _dataManager.Comments.GetAnimeCommentsAsync(id)).ToList(),
+                NewComment = new CommentInputModel { AnimeId = id }
+            };
+
+            return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddComment([Bind(Prefix = "NewComment")] CommentInputModel newComment, string? returnUrl)
+        {
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                Anime? entity = await _dataManager.Anime.GetAnimeByIdAsync(newComment.AnimeId);
+                if (entity is null)
+                {
+                    return NotFound();
+                }
+
+                AnimeShowViewModel model = new AnimeShowViewModel
+                {
+                    Anime = HelperDTO.TransformAnime(entity),
+                    Comments = (await _dataManager.Comments.GetAnimeCommentsAsync(newComment.AnimeId)).ToList(),
+                    NewComment = newComment
+                };
+
+                return View("Show", model);
+            }
+
+            Comment comment = new Comment
+            {
+                AnimeId = newComment.AnimeId,
+                UserId = userId,
+                Text = newComment.Text.Trim(),
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _dataManager.Comments.AddCommentAsync(comment);
+
+            if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return LocalRedirect(returnUrl);
+            }
+
+            return RedirectToAction(nameof(Show), new { id = newComment.AnimeId });
         }
 
         [Authorize]

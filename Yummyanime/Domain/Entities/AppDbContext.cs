@@ -8,6 +8,7 @@ namespace Yummyanime.Domain.Entities
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Anime> Animes { get; set; }
         public DbSet<UserAnimeFavorite> UserAnimeFavorites { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -19,7 +20,7 @@ namespace Yummyanime.Domain.Entities
 
             builder.Entity<Anime>()
                 .Property(x => x.Rating)
-                .HasPrecision(3, 1);
+                .HasPrecision(3, 2);
 
             builder.Entity<Anime>()
                 .HasOne(x => x.Genre)
@@ -37,6 +38,18 @@ namespace Yummyanime.Domain.Entities
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<UserAnimeFavorite>()
+                .HasOne(x => x.Anime)
+                .WithMany()
+                .HasForeignKey(x => x.AnimeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Comment>()
+                .HasOne(x => x.User)
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Comment>()
                 .HasOne(x => x.Anime)
                 .WithMany()
                 .HasForeignKey(x => x.AnimeId)

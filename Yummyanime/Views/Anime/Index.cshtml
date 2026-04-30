@@ -45,7 +45,7 @@ _ => "year_desc"
                             <div class="poster-meta">
                                 <span>@(string.IsNullOrWhiteSpace(entity.GenreName) ? L["NoGenre"] : entity.GenreName)</span>
                                 <span>@entity.Year</span>
-                                <span>★ @entity.Rating</span>
+                                <span>★ @entity.Rating.ToString("0.00")</span>
                             </div>
                         </article>
                     }

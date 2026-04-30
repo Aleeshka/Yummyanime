@@ -32,6 +32,7 @@ namespace Yummyanime
             builder.Services.AddTransient<IGenresRepository, EFGenresRepository>();
             builder.Services.AddTransient<IAnimeRepository, EFAnimeRepository>();
             builder.Services.AddTransient<IUserAnimeFavoritesRepository, EFUserAnimeFavoritesRepository>();
+            builder.Services.AddTransient<ICommentsRepository, EFCommentsRepository>();
             builder.Services.AddTransient<DataManager>();
 
             builder.Services.AddIdentity<AppUser, IdentityRole>(options =>

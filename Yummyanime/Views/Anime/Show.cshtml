@@ -1,20 +1,20 @@
-@model AnimeDTO
+@model AnimeShowViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
 @{
-    ViewBag.Title = Model.Title;
+    ViewBag.Title = Model.Anime.Title;
     UserAnimeListStatus? currentStatus = ViewBag.CurrentStatus is UserAnimeListStatus s ? s : null;
     string returnUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
 }
 
 <div class="col-12">
     <div id="content">
-        @if (!string.IsNullOrEmpty(Model.VideoUrl))
+        @if (!string.IsNullOrEmpty(Model.Anime.VideoUrl))
         {
             <section class="anime-show-hero glass-panel">
-                @if (Model.VideoUrl.Contains("kodikplayer.com"))
+                @if (Model.Anime.VideoUrl.Contains("kodikplayer.com"))
                 {
                     <div class="video-player">
-                        <iframe src="@Model.VideoUrl"
+                        <iframe src="@Model.Anime.VideoUrl"
                                 title="Kodik Player"
                                 frameborder="0"
                                 allowfullscreen
@@ -26,7 +26,7 @@
                 else
                 {
                     <div class="video-player">
-                        <iframe src="@Model.VideoUrl"
+                        <iframe src="@Model.Anime.VideoUrl"
                                 title="YouTube Player"
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -39,16 +39,16 @@
 
         <section class="anime-show-layout glass-panel">
             <div class="anime-show-poster">
-                <img src="@(string.IsNullOrWhiteSpace(Model.PhotoFileName) ? Url.Content("~/img/poster-placeholder.svg") : Url.Content($"~/img/{Model.PhotoFileName}"))"
-                     alt="@Model.Title" />
+                <img src="@(string.IsNullOrWhiteSpace(Model.Anime.PhotoFileName) ? Url.Content("~/img/poster-placeholder.svg") : Url.Content($"~/img/{Model.Anime.PhotoFileName}"))"
+                     alt="@Model.Anime.Title" />
             </div>
             <div class="anime-show-details">
-                <h2>@Model.Title</h2>
+                <h2>@Model.Anime.Title</h2>
 
                 @if (User.Identity?.IsAuthenticated == true)
                 {
                     <form asp-controller="Anime" asp-action="SetListStatus" method="post" style="margin-bottom: 1rem;">
-                        <input type="hidden" name="id" value="@Model.Id" />
+                        <input type="hidden" name="id" value="@Model.Anime.Id" />
                         <input type="hidden" name="returnUrl" value="@returnUrl" />
                         <select name="status">
                             <option value="Favorite" selected="@(currentStatus == UserAnimeListStatus.Favorite ? "selected" : null)">@L["Status_Favorite"]</option>
@@ -70,24 +70,71 @@
 
                 <div class="anime-detail-line">
                     <span>@L["Genre_Label"]:</span>
-                    <span>@(string.IsNullOrWhiteSpace(Model.GenreName) ? L["Genre_Empty"] : Model.GenreName)</span>
+                    <span>@(string.IsNullOrWhiteSpace(Model.Anime.GenreName) ? L["Genre_Empty"] : Model.Anime.GenreName)</span>
                 </div>
 
                 <div class="anime-detail-line">
                     <span>@L["Year_Label"]:</span>
-                    <span>@Model.Year</span>
+                    <span>@Model.Anime.Year</span>
                 </div>
 
                 <div class="anime-detail-line">
                     <span>@L["Rating_Label"]:</span>
-                    <span>★ @Model.Rating</span>
+                    <span>★ @Model.Anime.Rating.ToString("0.00")</span>
                 </div>
 
                 <div class="anime-detail-line">
                     <span>@L["Description_Label"]:</span>
                 </div>
-                <p>@(string.IsNullOrWhiteSpace(Model.Description) ? L["Description_Empty"] : Model.Description)</p>
+                <p>@(string.IsNullOrWhiteSpace(Model.Anime.Description) ? L["Description_Empty"] : Model.Anime.Description)</p>
             </div>
+        </section>
+
+        <section class="glass-panel" style="margin-top: 1.5rem;">
+            <header class="catalog-header">
+                <h3 class="icon fa-comments">Комментарии</h3>
+            </header>
+
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <form asp-controller="Anime" asp-action="AddComment" method="post" class="comment-form">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="NewComment.AnimeId" />
+                    <input type="hidden" name="returnUrl" value="@returnUrl" />
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <textarea asp-for="NewComment.Text" placeholder="Напишите комментарий..."></textarea>
+                    <span asp-validation-for="NewComment.Text"></span>
+                    <button type="submit" class="button">Отправить</button>
+                </form>
+            }
+            else
+            {
+                <p>
+                    <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@returnUrl">@L["Login_Link"]</a>
+                    Чтобы писать комментарии, войдите в аккаунт.
+                </p>
+            }
+
+            @if (Model.Comments.Any())
+            {
+                <div class="comment-list">
+                    @foreach (Comment comment in Model.Comments)
+                    {
+                        string author = comment.User?.DisplayName ?? comment.User?.UserName ?? "Пользователь";
+                        <article class="comment-card">
+                            <div class="comment-meta">
+                                <strong>@author</strong>
+                                <span class="comment-date">@comment.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
+                            </div>
+                            <p>@comment.Text</p>
+                        </article>
+                    }
+                </div>
+            }
+            else
+            {
+                <p>Пока нет комментариев.</p>
+            }
         </section>
     </div>
 </div>
@@ -122,5 +169,35 @@
     width: 100%;
     height: 100%;
     pointer-events: auto;
+}
+
+.comment-form {
+    margin-bottom: 1.25rem;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.comment-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.comment-card {
+    padding: 1rem;
+    border: 1px solid rgba(255, 43, 67, 0.2);
+    border-radius: 12px;
+    background: rgba(14, 16, 26, 0.6);
+}
+
+.comment-meta {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.comment-date {
+    color: #9aa0aa;
+    font-size: 0.9rem;
 }
 </style>

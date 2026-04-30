@@ -39,7 +39,7 @@ bool hasRandomCandidate = homeShowcase.Any();
             <a asp-area="" asp-controller="Anime" asp-action="Show" asp-route-id="@entity.Id" class="top-rated-card glass-panel" data-random-url="@Url.Action("Show", "Anime", new { id = entity.Id })">
                 <img src="@(string.IsNullOrWhiteSpace(entity.PhotoFileName) ? Url.Content("~/img/default-poster.svg") : Url.Content($"~/img/{entity.PhotoFileName}"))" alt="@entity.Title" loading="lazy" />
                 <span class="title">@entity.Title</span>
-                <span class="rating">★ @entity.Rating</span>
+                <span class="rating">★ @entity.Rating.ToString("0.00")</span>
             </a>
         }
     </div>
